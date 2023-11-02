@@ -1,0 +1,1 @@
+GameInputActionMap.cs me bhar bhar ke errors kyo hai ?. mene filhal normal input use kiye hai bad me badalta hu but tum ye errors dekho pahle
