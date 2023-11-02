@@ -374,22 +374,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3dab86c1714f44baee39b950100524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backAction:
-    m_Name: Back
+  pauseActionBinding:
+    m_Name: Pause Action Binding
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 000f39ec-93a3-47da-9e9e-5b720747d3ea
+    m_Id: ef86e786-acb7-4ed4-ad28-34924792d988
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 2dbeda79-e934-4b52-a6be-fb34e805d81e
-      m_Path: '*/{Back}'
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Back
-      m_Flags: 0
+    m_SingletonActionBindings: []
     m_Flags: 0
   onGamePaused:
     m_PersistentCalls:
