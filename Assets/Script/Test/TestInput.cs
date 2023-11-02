@@ -8,7 +8,7 @@ public class TestInput : MonoBehaviour
     {
         if (InputManager.GetInstance.MoveInput.magnitude > 0.001)
         {
-            Debug.Log($"X:{InputManager.GetInstance.MoveInput.x}  Y:{InputManager.GetInstance.MoveInput.y}")
+            Debug.Log($"X:{InputManager.GetInstance.MoveInput.x}  Y:{InputManager.GetInstance.MoveInput.y}");
         }
         if (InputManager.GetInstance.IsJumpPressed)
         {
