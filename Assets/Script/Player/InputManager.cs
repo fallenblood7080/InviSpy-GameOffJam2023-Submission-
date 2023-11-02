@@ -1,12 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Responsible for Reading the Input from Device.
+/// Using Singleton Pattern <br></br>
+///Currently Defined Movement are MoveInput(Vector2), IsJumpPressed(bool), IsCrouchedPressed(bool), IsChangeSizePressed(bool)
+/// </summary>
 public class InputManager : MonoBehaviour
 {
     private static InputManager instance;
 
+    /// <summary>
+    /// Return the instance of InputManager
+    /// </summary>
     public static InputManager GetInstance => instance;
 
     private GameInputActionMap gameaActionMap;
@@ -28,10 +33,10 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if (!playerActions.enabled)
+        if (!playerActions.enabled) //! if input are disable then dont read input unnecessarily
             return;
 
-        moveInput = playerActions.Move.ReadValue<Vector2>();
+        moveInput = playerActions.Move.ReadValue<Vector2>(); 
         isJumpPressed = playerActions.Jump.WasPerformedThisFrame();
         isCrouchPressed = playerActions.Crouch.WasPerformedThisFrame();
         isChangeSizePressed = playerActions.SizeChange.WasPerformedThisFrame();
@@ -46,11 +51,18 @@ public class InputManager : MonoBehaviour
         playerActions = gameaActionMap.Player;
     }
 
+    /// <summary>
+    /// Enable Player Input
+    /// </summary>
     public void EnablePlayerInput()
     {
         playerActions.Enable();
         //Some more stuffs when Input Enabled will written here
     }
+
+    /// <summary>
+    /// Disable Player Input
+    /// </summary>
     public void DisablePlayerInput()
     {
         playerActions.Disable();
