@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight;
     [Space(5f)]
     [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private bool followY;
 
     private float currentSpeed;
     private Vector3 dir;
@@ -38,7 +39,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (controller.isGrounded) dir.y = -2f;
 
-        cameraFollowRoot.transform.position = transform.position;
+        cameraFollowRoot.transform.position = followY ? transform.position : new(transform.position.x, 0, transform.position.z);
+
         dir = new(InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, InputManager.GetInstance.MoveInput.y * currentSpeed);
 
         if (dir.sqrMagnitude > 0.1) RotatePlayerTowardMovingDir(dir);
