@@ -36,7 +36,7 @@ public class InputManager : MonoBehaviour
         if (!playerActions.enabled) //! if input are disable then dont read input unnecessarily
             return;
 
-        moveInput = playerActions.Move.ReadValue<Vector2>(); 
+        moveInput = playerActions.Move.ReadValue<Vector2>().normalized; 
         isJumpPressed = playerActions.Jump.WasPerformedThisFrame();
         isCrouchPressed = playerActions.Crouch.WasPerformedThisFrame();
         isChangeSizePressed = playerActions.SizeChange.WasPerformedThisFrame();
