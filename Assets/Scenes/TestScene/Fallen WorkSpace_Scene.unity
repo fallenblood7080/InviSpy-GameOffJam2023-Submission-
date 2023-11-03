@@ -158,7 +158,9 @@ MonoBehaviour:
   moveSpeed: 5
   crouchSpeed: 1
   rotationSpeed: 10
-  jumpHeight: 2
+  jumpHeight: 1
+  crouchHeight: 1
+  standHeight: 1.75
   gravity: -9.81
   followY: 1
   playerLayer:
@@ -184,7 +186,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
+  m_Height: 1.75
   m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3

@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float crouchSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float jumpHeight;
+    [SerializeField] private float crouchHeight = 1f, standHeight = 2f;
     [Space(5f)]
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private bool followY;
@@ -35,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         currentSpeed = moveSpeed; //! intialse the player speed
+        controller.height = standHeight;
         if(cameraFollowRoot == null)
         {
             Debug.LogError("cameraFollowRoot is not Assigned!");
@@ -76,13 +78,10 @@ public class PlayerMovement : MonoBehaviour
                 playerAction();
             } 
         }
-        else
-        {
-            Debug.Log("Cant Perform Action!");
-        }
 
-        playerAnimator.SetBool("isMoving", isMoving);
+        playerAnimator.SetBool("isGround", controller.isGrounded);
         playerAnimator.SetBool("isCrouching", isCrouched);
+        playerAnimator.SetBool("isMoving", isMoving);
 
         dir.y += gravity * Time.deltaTime; //! Add some gravity
         controller.Move(Time.deltaTime * dir); //! remember g is acceleration value thats why you multiply time.deltatime twice (m/s^2) and also for movement
@@ -100,12 +99,14 @@ public class PlayerMovement : MonoBehaviour
         isCrouched = true;
         currentSpeed = crouchSpeed;
         "Crouched".Log();
+        controller.height = crouchHeight;
     }
 
     private void Stand()
     {
         isCrouched = false;
         currentSpeed = moveSpeed;
+        controller.height = standHeight;
         "Standed".Log();
     }
 
@@ -115,9 +116,9 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * 100 * Time.deltaTime); //! Smooth the rotation
     }
     private void LateUpdate()
-    { 
+    {
         //! Fixing the Animation error
-        playerAnimator.transform.position = new(transform.root.position.x, 1, transform.root.position.z);
+        playerAnimator.transform.position = transform.root.position;
         playerAnimator.transform.rotation = transform.root.rotation;
     }
 }
