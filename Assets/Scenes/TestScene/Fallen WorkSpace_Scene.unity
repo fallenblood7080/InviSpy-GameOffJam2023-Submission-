@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,13 +153,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1084c161f82983143b5d8ba8adecb0c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraFollowRoot: {fileID: 1671614800}
+  cameraFollowRoot: {fileID: 929102953}
   ceilingCheck: {fileID: 1135985179}
   moveSpeed: 5
   crouchSpeed: 2
   rotationSpeed: 10
   jumpHeight: 2
-  gravity: -9.81
+  gravity: -39.24
   followY: 1
   playerLayer:
     serializedVersion: 2
@@ -669,6 +669,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &929102952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 929102953}
+  m_Layer: 0
+  m_Name: CameraFollowRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &929102953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929102952}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.63, z: 1.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &948153212
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,8 +898,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.44007537, y: 0, z: 0, w: 0.89796084}
-  m_LocalPosition: {x: 0, y: 6.45, z: -5}
+  m_LocalRotation: {x: 0.44007537, y: 0.00000003303629, z: -0.000000016190526, w: 0.89796084}
+  m_LocalPosition: {x: 0, y: 8.08, z: -3.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1079,8 +1110,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 1671614800}
-  m_Follow: {fileID: 1671614800}
+  m_LookAt: {fileID: 929102953}
+  m_Follow: {fileID: 929102953}
   m_Lens:
     FieldOfView: 100
     OrthographicSize: 5
@@ -1108,8 +1139,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1257180744}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.44007537, y: 0, z: 0, w: 0.89796084}
-  m_LocalPosition: {x: 0, y: 6.45, z: -5}
+  m_LocalRotation: {x: 0.44007537, y: 0.00000003303629, z: -0.000000016190526, w: 0.89796084}
+  m_LocalPosition: {x: 0, y: 8.08, z: -3.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1200,37 +1231,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1593136109}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1671614799
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1671614800}
-  m_Layer: 0
-  m_Name: CameraFollowRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1671614800
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671614799}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1737728183
 GameObject:
   m_ObjectHideFlags: 3
@@ -1337,8 +1337,8 @@ SceneRoots:
   - {fileID: 656507751}
   - {fileID: 948153213}
   - {fileID: 813582988}
+  - {fileID: 929102953}
   - {fileID: 472220599}
-  - {fileID: 1671614800}
   - {fileID: 59531465}
   - {fileID: 1257180746}
   - {fileID: 563771578}

@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 dir;
     private bool isCrouched;
     private bool isSthAbove;
+    
 
     private void Awake()
     {
