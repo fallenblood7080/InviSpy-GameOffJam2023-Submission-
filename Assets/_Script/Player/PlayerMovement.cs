@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private float currentSpeed;
     private Vector3 dir;
     private bool isCrouched;
-    private bool canStand;
+    private bool isSthAbove;
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Start()
     {
-        currentSpeed = moveSpeed;
+        currentSpeed = moveSpeed; //! intialse the player speed
         if(cameraFollowRoot == null)
         {
             Debug.LogError("cameraFollowRoot is not Assigned!");
@@ -39,33 +39,40 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (controller.isGrounded) dir.y = -2f;
+        if (controller.isGrounded) dir.y = -2f; //! to prevent further increasing on dir.y will force it to bbe -2
 
-        canStand = !Physics.CheckSphere(ceilingCheck.position, 0.3f, ~playerLayer);
+        isSthAbove = Physics.CheckSphere(ceilingCheck.position, 0.3f, ~playerLayer); //! is there sth above player?
 
-        cameraFollowRoot.transform.position = followY ? transform.position : new(transform.position.x, 0, transform.position.z);
+        cameraFollowRoot.transform.position = followY ? transform.position : new(transform.position.x, 0, transform.position.z); //! check whether the camera needs to follow y axis of player then according to it follows
 
-        dir = new(InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, InputManager.GetInstance.MoveInput.y * currentSpeed);
+        dir = new(InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, InputManager.GetInstance.MoveInput.y * currentSpeed); //! reads the input
 
-        if (dir.sqrMagnitude > 0.1) RotatePlayerTowardMovingDir(dir);
+        if (dir.sqrMagnitude > 0.1) RotatePlayerTowardMovingDir(dir); //! is there any movement, if yes then rotate the player towards that direction
 
-        if (controller.isGrounded && canStand)
+        if (controller.isGrounded && !isSthAbove)//! if on ground and there is nothing above the player
         {
-            if (InputManager.GetInstance.IsJumpPressed)
+            if (InputManager.GetInstance.IsJumpPressed) 
             {
-                Action playerAction = isCrouched ? Stand : Jump;
+                //! is player is in crouch position? If yes, then stand else jump
+                Action playerAction = isCrouched ? Stand : Jump; 
                 playerAction();
             }
             if (InputManager.GetInstance.IsCrouchPressed)
             {
+                //! is player is in crouch position? If yes, then stand else crouch
                 Action playerAction = isCrouched ? Stand : Crouch;
                 playerAction();
             } 
         }
+        else
+        {
+            Debug.Log("Cant Perform Action!");
+        }
 
-        dir.y += gravity * Time.deltaTime;
-        controller.Move(Time.deltaTime * dir);
+        dir.y += gravity * Time.deltaTime; //! Add some gravity
+        controller.Move(Time.deltaTime * dir); //! remember g is acceleration value thats why you multiply time.deltatime twice (m/s^2) and also for movement
     }
+
 
     private void Jump()
     {
@@ -90,6 +97,6 @@ public class PlayerMovement : MonoBehaviour
     void RotatePlayerTowardMovingDir(Vector3 dir)
     {
         Quaternion targetRotation = Quaternion.LookRotation(new(dir.x,0,dir.z));
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * 100 * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * 100 * Time.deltaTime); //! Smooth the rotation
     }
 }
