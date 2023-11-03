@@ -1,4 +1,5 @@
 using Extension;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -7,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
 
     [SerializeField] private Transform cameraFollowRoot;
-    [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform ceilingCheck;
     [Space(5f)]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float crouchSpeed;
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float currentSpeed;
     private Vector3 dir;
+    private bool isCrouched;
 
     private void Awake()
     {
@@ -34,25 +36,49 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (controller.isGrounded)
-        {
-            dir.y = -2f;
-        }
+        if (controller.isGrounded) dir.y = -2f;
 
         cameraFollowRoot.transform.position = transform.position;
-
         dir = new(InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, InputManager.GetInstance.MoveInput.y * currentSpeed);
 
-        if (dir.sqrMagnitude > 0.1)
-            RotatePlayerTowardMovingDir(dir);
+        if (dir.sqrMagnitude > 0.1) RotatePlayerTowardMovingDir(dir);
 
-        if (InputManager.GetInstance.IsJumpPressed && controller.isGrounded)
+        if (controller.isGrounded)
         {
-            dir.y = Mathf.Sqrt(gravity * -2 * jumpHeight);
+            if (InputManager.GetInstance.IsJumpPressed)
+            {
+                Action playerAction = isCrouched ? Stand : Jump;
+                playerAction();
+            }
+            if (InputManager.GetInstance.IsCrouchPressed)
+            {
+                Action playerAction = isCrouched ? Stand : Crouch;
+                playerAction();
+            } 
         }
 
         dir.y += gravity * Time.deltaTime;
         controller.Move(Time.deltaTime * dir);
+    }
+
+    private void Jump()
+    {
+        dir.y = Mathf.Sqrt(gravity * -2 * jumpHeight);
+        "Jumped".Log();
+    }
+
+    private void Crouch()
+    {
+        isCrouched = true;
+        currentSpeed = crouchSpeed;
+        "Crouched".Log();
+    }
+
+    private void Stand()
+    {
+        isCrouched = false;
+        currentSpeed = moveSpeed;
+        "Standed".Log();
     }
 
     void RotatePlayerTowardMovingDir(Vector3 dir)
