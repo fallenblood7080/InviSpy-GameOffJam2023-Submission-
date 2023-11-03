@@ -160,7 +160,7 @@ MonoBehaviour:
   rotationSpeed: 10
   jumpHeight: 2
   gravity: -9.81
-  followY: 0
+  followY: 1
 --- !u!143 &59531464
 CharacterController:
   m_ObjectHideFlags: 0
