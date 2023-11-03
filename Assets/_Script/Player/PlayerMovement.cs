@@ -19,9 +19,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool followY;
     [SerializeField] private LayerMask playerLayer;
 
+    [Space(5f)]
+    [SerializeField] private Animator playerAnimator;
+
     private float currentSpeed;
     private Vector3 dir;
     private bool isCrouched;
+    private bool isMoving;
     private bool isSthAbove;
 
     private void Awake()
@@ -47,7 +51,15 @@ public class PlayerMovement : MonoBehaviour
 
         dir = new(InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, InputManager.GetInstance.MoveInput.y * currentSpeed); //! reads the input
 
-        if (dir.sqrMagnitude > 0.1) RotatePlayerTowardMovingDir(dir); //! is there any movement, if yes then rotate the player towards that direction
+        if (dir.x != 0 || dir.z != 0) //! is there any movement, if yes then rotate the player towards that direction
+        {
+            RotatePlayerTowardMovingDir(dir);
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
 
         if (controller.isGrounded && !isSthAbove)//! if on ground and there is nothing above the player
         {
@@ -68,6 +80,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Cant Perform Action!");
         }
+
+        playerAnimator.SetBool("isMoving", isMoving);
+        playerAnimator.SetBool("isCrouching", isCrouched);
 
         dir.y += gravity * Time.deltaTime; //! Add some gravity
         controller.Move(Time.deltaTime * dir); //! remember g is acceleration value thats why you multiply time.deltatime twice (m/s^2) and also for movement
@@ -98,5 +113,11 @@ public class PlayerMovement : MonoBehaviour
     {
         Quaternion targetRotation = Quaternion.LookRotation(new(dir.x,0,dir.z));
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * 100 * Time.deltaTime); //! Smooth the rotation
+    }
+    private void LateUpdate()
+    { 
+        //! Fixing the Animation error
+        playerAnimator.transform.position = new(transform.root.position.x, 1, transform.root.position.z);
+        playerAnimator.transform.rotation = transform.root.rotation;
     }
 }
