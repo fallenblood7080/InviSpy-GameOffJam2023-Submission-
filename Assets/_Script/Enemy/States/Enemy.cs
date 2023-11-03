@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("Agent")]
     [HideInInspector] public NavMeshAgent Agent;
+    [SerializeField] private Transform pathHolder;
     public float PatrolSpeed = 5;
     [Header("States")]
     private EnemyStatesFactory _enemyStatesFactory;
@@ -43,4 +44,19 @@ public class Enemy : MonoBehaviour
     {
         _enemyStateBase.UpdateState();
     }
+
+    private void OnDrawGizmos() {
+		Vector3 startPosition = pathHolder.GetChild (0).position;
+		Vector3 previousPosition = startPosition;
+
+		foreach (Transform waypoint in pathHolder) {
+			Gizmos.DrawSphere (waypoint.position, .3f);
+			Gizmos.DrawLine (previousPosition, waypoint.position);
+			previousPosition = waypoint.position;
+		}
+		Gizmos.DrawLine (previousPosition, startPosition);
+
+		Gizmos.color = Color.red;
+		Gizmos.DrawRay (transform.position, transform.forward * 10f);
+	}
 }
