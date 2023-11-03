@@ -234,7 +234,6 @@ GameObject:
   - component: {fileID: 739828171}
   - component: {fileID: 739828170}
   - component: {fileID: 739828175}
-  - component: {fileID: 739828174}
   - component: {fileID: 739828176}
   m_Layer: 0
   m_Name: Enemy
@@ -333,33 +332,6 @@ Transform:
   - {fileID: 1591962853}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!54 &739828174
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739828169}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!195 &739828175
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -396,8 +368,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Agent: {fileID: 0}
   PatrolSpeed: 5
-  MinWaitTime: 0.3
-  MaxWaitTime: 0.5
+  MinWaitTime: 1
+  MaxWaitTime: 3
   WayPoints: []
   CurrentWayPoint: {fileID: 0}
   ExtraPetrolStopDistance: 1.5
@@ -461,8 +433,8 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
-  orthographic: 1
+  field of view: 30.8
+  orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:

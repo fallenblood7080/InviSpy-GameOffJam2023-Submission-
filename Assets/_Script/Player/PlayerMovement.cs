@@ -7,6 +7,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private bool isGrounded = true;
 
+    private float horizontalInput;
+    private float verticalInput;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -16,8 +19,8 @@ public class PlayerMovement : MonoBehaviour
     // Updating the rotation of player according to the direction of movement
     private void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        horizontalInput = InputManager.GetInstance.MoveInput.x;
+        verticalInput = InputManager.GetInstance.MoveInput.y;
 
         Vector3 movementDirection = new Vector3(horizontalInput, 0.0f, verticalInput).normalized;
 
@@ -28,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Handling jumping
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (isGrounded && InputManager.GetInstance.IsJumpPressed)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
@@ -38,12 +41,12 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Apply movement force to the Rigidbody
-        rb.velocity = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, rb.velocity.y, Input.GetAxis("Vertical") * moveSpeed);
+        rb.velocity = new Vector3(horizontalInput * moveSpeed, rb.velocity.y, verticalInput * moveSpeed);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) // Change "Ground" to your ground's tag
+        if (collision.gameObject.CompareTag(GROUND_TAG)) // Change "Ground" to your ground's tag
         {
             isGrounded = true;
         }
@@ -51,9 +54,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) // Change "Ground" to your ground's tag
+        if (collision.gameObject.CompareTag(GROUND_TAG)) // Change "Ground" to your ground's tag
         {
             isGrounded = false;
         }
     }
+
+
+    #region  Cached Properties
+
+    private readonly static string GROUND_TAG = "Ground";
+
+    #endregion
 }
