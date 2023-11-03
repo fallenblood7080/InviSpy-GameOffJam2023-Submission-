@@ -17,10 +17,12 @@ public class PlayerMovement : MonoBehaviour
     [Space(5f)]
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private bool followY;
+    [SerializeField] private LayerMask playerLayer;
 
     private float currentSpeed;
     private Vector3 dir;
     private bool isCrouched;
+    private bool canStand;
 
     private void Awake()
     {
@@ -39,13 +41,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (controller.isGrounded) dir.y = -2f;
 
+        canStand = !Physics.CheckSphere(ceilingCheck.position, 0.3f, ~playerLayer);
+
         cameraFollowRoot.transform.position = followY ? transform.position : new(transform.position.x, 0, transform.position.z);
 
         dir = new(InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, InputManager.GetInstance.MoveInput.y * currentSpeed);
 
         if (dir.sqrMagnitude > 0.1) RotatePlayerTowardMovingDir(dir);
 
-        if (controller.isGrounded)
+        if (controller.isGrounded && canStand)
         {
             if (InputManager.GetInstance.IsJumpPressed)
             {
