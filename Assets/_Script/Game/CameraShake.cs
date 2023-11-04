@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using Cinemachine;
 
-public class camShake : MonoBehaviour
+public class CameraShake : MonoBehaviour
 {
-    public static camShake instance;
+    private static CameraShake instance;
+    public static CameraShake GetInstance => instance;
 
     private CinemachineVirtualCamera virtualCamera;
     private float shakeTime;
@@ -33,13 +33,15 @@ public class camShake : MonoBehaviour
             {
                 CinemachineBasicMultiChannelPerlin noise = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
                 noise.m_AmplitudeGain = 0;
+                noise.m_FrequencyGain = 0;
             }
         }
     }
-    public void Shake(float intensity ,float timer)
+    public void Shake(float intensity ,float timer, float freq)
     {
         CinemachineBasicMultiChannelPerlin noise = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         noise.m_AmplitudeGain = intensity;
+        noise.m_FrequencyGain = freq;
         shakeTime = timer;
     }
 }

@@ -137,6 +137,5 @@ public class PlayerMovement : MonoBehaviour
         //? wrap noise method with issmall condition
         noise.CreateNoise();
         OnJumpLanded?.Invoke(); //! Invoke OnJumpLand event
-
     }
 }
