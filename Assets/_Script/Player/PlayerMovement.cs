@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
         {
             RotatePlayerTowardMovingDir(dir);
             isMoving = true;
-            if(!shiftPower.IsCurrentlySmall)
+            if(!shiftPower.IsCurrentlySmall && !isCrouched)
                 noise.CreateNoise(); //! Create some noise on movement
         }
         else
