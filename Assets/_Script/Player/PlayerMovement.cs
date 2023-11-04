@@ -1,6 +1,7 @@
-using Extension;
+﻿using Extension;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -23,6 +24,10 @@ public class PlayerMovement : MonoBehaviour
     [Space(5f)]
     [SerializeField] private Animator playerAnimator;
 
+    [SerializeField] private UnityEvent OnJumpLanded;
+
+    private NoiseHandler noise;
+
     private float currentSpeed;
     private Vector3 dir;
     private bool isCrouched;
@@ -33,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        noise = GetComponent<NoiseHandler>();
     }
     private void Start()
     {
@@ -46,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (controller.isGrounded) dir.y = -2f; //! to prevent further increasing on dir.y will force it to bbe -2
+        if (controller.isGrounded) dir.y = -2f; //! to prevent further increasing on dir.y will force it to be -2
 
         isSthAbove = Physics.CheckSphere(ceilingCheck.position, 0.3f, ~playerLayer); //! is there sth above player?
 
@@ -58,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
         {
             RotatePlayerTowardMovingDir(dir);
             isMoving = true;
+            noise.CreateNoise(); //! Create some noise on movement
         }
         else
         {
@@ -93,6 +100,8 @@ public class PlayerMovement : MonoBehaviour
     {
         dir.y = Mathf.Sqrt(gravity * -2 * jumpHeight);
         "Jumped".Log();
+        float timeToReachGround = 2 * Mathf.Sqrt(2 * jumpHeight / -gravity);//! Calcuate the time required to land on ground: t = 2√(2h/g)
+        Invoke(nameof(JumpLanded), timeToReachGround); //! Invoke jump landed after calculate time
     }
 
     private void Crouch()
@@ -121,5 +130,13 @@ public class PlayerMovement : MonoBehaviour
         //! Fixing the Animation error
         playerAnimator.transform.position = transform.root.position;
         playerAnimator.transform.rotation = transform.root.rotation;
+    }
+
+    void JumpLanded()
+    {
+        //? wrap noise method with issmall condition
+        noise.CreateNoise();
+        OnJumpLanded?.Invoke(); //! Invoke OnJumpLand event
+
     }
 }
