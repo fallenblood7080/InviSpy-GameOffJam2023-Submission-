@@ -13,6 +13,10 @@ public class PlayerMovement : MonoBehaviour
     [Space(5f)]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float crouchSpeed;
+    [Space(2f)]
+    [SerializeField] private float smallSizeMoveSpeed;
+    [SerializeField] private float smallSizeCrouchSpeed;
+    [Space(2f)]
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float crouchHeight = 1f, standHeight = 2f;
@@ -27,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private UnityEvent OnJumpLanded;
 
     private NoiseHandler noise;
+    private ShapeShiftPower shiftPower;
 
     private float currentSpeed;
     private Vector3 dir;
@@ -39,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         noise = GetComponent<NoiseHandler>();
+        shiftPower = GetComponent<ShapeShiftPower>();
     }
     private void Start()
     {
@@ -52,6 +58,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        currentSpeed = shiftPower.IsCurrentlySmall ? (isCrouched ? smallSizeCrouchSpeed : smallSizeMoveSpeed) : (isCrouched ? crouchSpeed : moveSpeed);
+
+
         if (controller.isGrounded) dir.y = -2f; //! to prevent further increasing on dir.y will force it to be -2
 
         isSthAbove = Physics.CheckSphere(ceilingCheck.position, 0.3f, ~playerLayer); //! is there sth above player?
@@ -64,7 +73,8 @@ public class PlayerMovement : MonoBehaviour
         {
             RotatePlayerTowardMovingDir(dir);
             isMoving = true;
-            noise.CreateNoise(); //! Create some noise on movement
+            if(shiftPower.IsCurrentlySmall)
+                noise.CreateNoise(); //! Create some noise on movement
         }
         else
         {
@@ -95,6 +105,12 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(Time.deltaTime * dir); //! remember g is acceleration value thats why you multiply time.deltatime twice (m/s^2) and also for movement
     }
 
+    private void LateUpdate()
+    {
+        //! Fixing the Animation error
+        playerAnimator.transform.position = transform.root.position;
+        playerAnimator.transform.rotation = transform.root.rotation;
+    }
 
     private void Jump()
     {
@@ -125,17 +141,14 @@ public class PlayerMovement : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(new(dir.x,0,dir.z));
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * 100 * Time.deltaTime); //! Smooth the rotation
     }
-    private void LateUpdate()
-    {
-        //! Fixing the Animation error
-        playerAnimator.transform.position = transform.root.position;
-        playerAnimator.transform.rotation = transform.root.rotation;
-    }
 
     void JumpLanded()
     {
         //? wrap noise method with issmall condition
-        noise.CreateNoise();
+        if (!shiftPower.IsCurrentlySmall)
+        {
+            noise.CreateNoise(); 
+        }
         OnJumpLanded?.Invoke(); //! Invoke OnJumpLand event
     }
 }
