@@ -10,16 +10,24 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public NavMeshAgent Agent;
     [SerializeField] private Transform pathHolder;
     public float PatrolSpeed = 5;
+
+    [Space(5)]
     [Header("States")]
     private EnemyStatesFactory _enemyStatesFactory;
     private EnemyStatesBase _enemyStateBase;
     public EnemyStatesBase CurrentState { get { return _enemyStateBase; } set { _enemyStateBase = value; } }
-    [Header("Petroling")]
+
+    [Space(5)]
+    [Header("Patroling")]
     public Coroutine LastWaitRoutine;
     public float MinWaitTime = 1f, MaxWaitTime = 6f;
     [HideInInspector] public Transform[] WayPoints;
     [HideInInspector] public Transform CurrentWayPoint;
     public float ExtraPetrolStopDistance = 1.5f;
+
+    [field:Space(5)]
+    [field:Header("Detect")]
+    [field:SerializeField] public bool hasDetected {get; set;}
 
     private void Awake()
     {
@@ -44,19 +52,4 @@ public class Enemy : MonoBehaviour
     {
         _enemyStateBase.UpdateState();
     }
-
-    private void OnDrawGizmos() {
-		Vector3 startPosition = pathHolder.GetChild (0).position;
-		Vector3 previousPosition = startPosition;
-
-		foreach (Transform waypoint in pathHolder) {
-			Gizmos.DrawSphere (waypoint.position, .3f);
-			Gizmos.DrawLine (previousPosition, waypoint.position);
-			previousPosition = waypoint.position;
-		}
-		Gizmos.DrawLine (previousPosition, startPosition);
-
-		Gizmos.color = Color.red;
-		Gizmos.DrawRay (transform.position, transform.forward * 10f);
-	}
 }

@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isCrouched;
     private bool isMoving;
     private bool isSthAbove;
+    
 
     private void Awake()
     {
