@@ -1709,6 +1709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40696fd09ced9e140b6037bc69d25bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSmall: 0
   smallSize: 0.2
   bigSize: 1
   timeRequiredToShift: 0.5
@@ -2290,6 +2291,7 @@ MonoBehaviour:
   - {fileID: 219331297}
   - {fileID: 1951614039}
   - {fileID: 1756744094}
+  playerPower: {fileID: 1044415043}
 --- !u!1 &1454259247
 GameObject:
   m_ObjectHideFlags: 0
