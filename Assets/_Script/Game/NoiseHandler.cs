@@ -2,7 +2,6 @@ using Extension;
 using UnityEngine;
 using UnityEngine.Events;
 
-//attach this script to that component which will create noise
 public class NoiseHandler : MonoBehaviour
 {
     [SerializeField] private float noiseHearingRange;
@@ -17,18 +16,13 @@ public class NoiseHandler : MonoBehaviour
     private void GetAllListenerNearby()
     {
         onNoiseCreate?.RemoveAllListeners();
-        onNoiseCreate?.AddListener(Noisetest);
-/*        foreach (GameObject enemies in GameObject.FindGameObjectsWithTag(""))
+
+        foreach (GameObject enemies in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             if (Vector3.Distance(transform.position, enemies.transform.position) <= noiseHearingRange)
             {
-                //onNoiseCreate.AddListener();
+                //onNoiseCreate.?AddListener();
             }
-        }*/
-    }
-
-    private void Noisetest()
-    {
-        "Some Noise!!".Log();
+        }
     }
 }

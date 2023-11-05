@@ -30,12 +30,15 @@ public class Enemy : MonoBehaviour
     [field:Space(5)]
     [field:Header("Detect")]
     [field:SerializeField] public bool hasDetected {get; set;}
+    [field:SerializeField] public bool hasSuspected {get; set;}
     [field:SerializeField] public Transform playerTransform {get; set;}
+    [SerializeField] private float maxTimeDetection;
 
     [Header("UI")]
     [SerializeField] public TextMeshProUGUI deathText;
     [SerializeField] public Image susTimerBg;
     [SerializeField] public Image susTimer;
+    [field:SerializeField] public Image sus;
 
     private EnemyFov enemyFov;
 
@@ -82,28 +85,39 @@ public class Enemy : MonoBehaviour
         if (timeElapsedWhenDetected > 0f)
         {
             Agent.ResetPath();
-            Agent.Stop();
+            Agent.isStopped = true;
 
            var targetRotation = Quaternion.LookRotation(playerTransform.transform.position - transform.position);
            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
 
            susTimerBg.gameObject.SetActive(true);
-           susTimer.fillAmount = timeElapsedWhenDetected / 2f;
+           susTimer.fillAmount = timeElapsedWhenDetected / maxTimeDetection;
 
            hasDetected = true;
         }
         else
         {
-            hasDetected = false;
+            if (hasDetected)
+            {
+                sus.gameObject.SetActive(true);
+
+                hasSuspected = true;
+
+                Agent.ResetPath();
+                Agent.isStopped = false;
+
+                _enemyStateBase.SwitchStates(_enemyStatesFactory.Wait());
+
+                hasDetected = false;
+            }
             susTimerBg.gameObject.SetActive(false);
         }
 
-        if (hasDetected == true && timeElapsedWhenDetected >= 2f)
+        if (hasDetected == true && timeElapsedWhenDetected >= maxTimeDetection)
         {
             deathText.gameObject.SetActive(true);
-            timeElapsedWhenDetected = 2f;
+            timeElapsedWhenDetected = maxTimeDetection;
         }
     }
-
 
 }
