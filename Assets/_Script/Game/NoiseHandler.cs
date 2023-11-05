@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class NoiseHandler : MonoBehaviour
 {
-    [SerializeField] private float noiseHearingRange;
+    [field:SerializeField] public float noiseHearingRange {get; private set;}
     private UnityEvent onNoiseCreate;
 
     public void CreateNoise()
@@ -17,7 +17,7 @@ public class NoiseHandler : MonoBehaviour
     {
         onNoiseCreate?.RemoveAllListeners();
 
-        foreach (GameObject enemies in GameObject.FindGameObjectsWithTag("Enemy"))
+        foreach (GameObject enemies in GameObject.FindGameObjectsWithTag(ENEMY_TAG))
         {
             if (Vector3.Distance(transform.position, enemies.transform.position) <= noiseHearingRange)
             {
@@ -25,4 +25,6 @@ public class NoiseHandler : MonoBehaviour
             }
         }
     }
+
+    private static readonly string ENEMY_TAG = "Enemy";
 }
