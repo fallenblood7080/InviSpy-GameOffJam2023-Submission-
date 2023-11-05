@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
@@ -28,10 +30,21 @@ public class Enemy : MonoBehaviour
     [field:Space(5)]
     [field:Header("Detect")]
     [field:SerializeField] public bool hasDetected {get; set;}
+    [field:SerializeField] public Transform playerTransform {get; set;}
+
+    [Header("UI")]
+    [SerializeField] public TextMeshProUGUI deathText;
+    [SerializeField] public Image susTimerBg;
+    [SerializeField] public Image susTimer;
+
+    private EnemyFov enemyFov;
+
+    private float timeElapsedWhenDetected;
 
     private void Awake()
     {
         Agent = GetComponent<NavMeshAgent>();
+        enemyFov = GetComponent<EnemyFov>();
     }
     private void Start()
     {
@@ -51,5 +64,46 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         _enemyStateBase.UpdateState();
+
+        EnemyDetection();
     }
+
+    private void EnemyDetection()
+    {
+        if (enemyFov.visibleTargets.Count != 0)
+        {
+            timeElapsedWhenDetected += Time.deltaTime;
+        }
+        else
+        {
+            timeElapsedWhenDetected = 0f;
+        }
+
+        if (timeElapsedWhenDetected > 0f)
+        {
+            Agent.ResetPath();
+            Agent.Stop();
+
+           var targetRotation = Quaternion.LookRotation(playerTransform.transform.position - transform.position);
+           transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
+
+           susTimerBg.gameObject.SetActive(true);
+           susTimer.fillAmount = timeElapsedWhenDetected / 2f;
+
+           hasDetected = true;
+        }
+        else
+        {
+            hasDetected = false;
+            susTimerBg.gameObject.SetActive(false);
+        }
+
+        if (hasDetected == true && timeElapsedWhenDetected >= 2f)
+        {
+            deathText.gameObject.SetActive(true);
+            timeElapsedWhenDetected = 2f;
+        }
+    }
+
+
 }
