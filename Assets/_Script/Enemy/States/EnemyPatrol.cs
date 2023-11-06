@@ -64,6 +64,7 @@ public class EnemyPatrol : EnemyStatesBase
     #region Unused Functions
     public override void ExitState()
     {
+        
     }
         
     #endregion

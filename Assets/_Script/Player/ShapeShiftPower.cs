@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class ShapeShiftPower : MonoBehaviour
 {
 
-    private bool isSmall = false;
+    [HideInInspector] public bool isSmall = false;
     private bool isChangingSize = false;
     private float smallTime;
     private float nextTimeToUnlockShiftPower;
@@ -79,70 +79,4 @@ public class ShapeShiftPower : MonoBehaviour
                      }); 
         }
     }
-    #region older
-
-    /*    IEnumerator Shrinking(float waitForSeconds = 0.4f)
-        {
-            yield return new WaitForSeconds(waitForSeconds); //Wait for 0.4 second
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, smallSize, waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, smallSize, waitForSeconds);
-
-            yield return new WaitForSeconds(timeLimitForBeingSmall);
-            StartCoroutine(Expanding());
-
-            yield return null;
-        }
-
-        IEnumerator Expanding(float waitForSeconds = 0.4f)
-        {
-            yield return new WaitForSeconds(waitForSeconds); //Wait for 0.0.5 second
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f)), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(1f, 1f, 1f), waitForSeconds);
-            yield return new WaitForSeconds(waitForSeconds);
-            gameObject.transform.localScale = Vector3.Slerp(gameObject.transform.localScale, new Vector3(1f, 1f, 1f), waitForSeconds);
-            isSmall = false;
-
-            yield return null;
-        }*/
-    #endregion
 }

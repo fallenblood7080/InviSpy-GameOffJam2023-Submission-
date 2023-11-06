@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyWait : EnemyStatesBase
 {
+    public float randomWaitTime;
+
     public EnemyWait(Enemy enemy, EnemyStatesFactory enemyStateFactory) : base(enemy, enemyStateFactory)
     {
     }
@@ -15,8 +17,10 @@ public class EnemyWait : EnemyStatesBase
     
     IEnumerator DelayWaitForPetrol()
     {
-        float randomWaitTime = Random.Range(Enemy.MinWaitTime, Enemy.MaxWaitTime);
+        randomWaitTime = Random.Range(Enemy.MinWaitTime, Enemy.MaxWaitTime);
         yield return new WaitForSeconds(randomWaitTime);
+        Enemy.sus.gameObject.SetActive(false);
+        Enemy.hasSuspected = false;
         SwitchStates(EStateFactory.Petrol());
     }
 
