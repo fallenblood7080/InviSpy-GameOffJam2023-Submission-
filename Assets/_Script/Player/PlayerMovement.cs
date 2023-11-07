@@ -60,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
     {
         currentSpeed = shiftPower.IsCurrentlySmall ? (isCrouched ? smallSizeCrouchSpeed : smallSizeMoveSpeed) : (isCrouched ? crouchSpeed : moveSpeed);
 
-
         if (controller.isGrounded) dir.y = -2f; //! to prevent further increasing on dir.y will force it to be -2
 
         isSthAbove = Physics.CheckSphere(ceilingCheck.position, 0.3f, ~playerLayer); //! is there sth above player?

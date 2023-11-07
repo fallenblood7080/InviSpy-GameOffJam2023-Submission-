@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,13 +17,6 @@ public class PlayerUI : MonoBehaviour
 
     private void Update() 
     {
-        if (!power.isSmall)
-        {
-            BeingSmall.fillAmount =  power.nextTimeToUnlockShiftPower / power.shiftPowerCoolDown;
-        }
-        else
-        {
-            BeingSmall.fillAmount = 1 - power.smallTime / power.timeLimitForBeingSmall;
-        }
+        BeingSmall.fillAmount = !power.IsCurrentlySmall ? power.NextTimeToUnlock / power.ShiftPowerCooldown : 1 - power.TimeSpentInSmall / power.TimeLimitBeingSmall;
     }
 }

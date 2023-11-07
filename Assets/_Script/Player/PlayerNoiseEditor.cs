@@ -12,7 +12,7 @@ public class PlayerNoiseEditor : Editor
 
 		Handles.color = Color.white;
 
-		Handles.DrawWireArc (fow.transform.position, Vector3.up, Vector3.forward, 360, fow.noiseHearingRange);
+		Handles.DrawWireArc (fow.transform.position, Vector3.up, Vector3.forward, 360, fow.NoiseHearingRange);
 	}
 
 }

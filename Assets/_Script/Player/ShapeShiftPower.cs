@@ -5,22 +5,28 @@ using UnityEngine.Events;
 public class ShapeShiftPower : MonoBehaviour
 {
 
-    [HideInInspector] public bool isSmall = false;
+    private bool isSmall = false;
     private bool isChangingSize = false;
-    [field:SerializeField] public float smallTime;
-    [field:SerializeField] public float nextTimeToUnlockShiftPower;
 
     [SerializeField] private float smallSize , bigSize = 1f;
-    [field:SerializeField] public float timeRequiredToShift {get; private set;}
-    [field:SerializeField] public float timeLimitForBeingSmall {get; private set;}
-    [field:SerializeField] public float shiftPowerCoolDown {get; private set;}
+
+    [SerializeField] private float timeRequiredToShift;
+    [SerializeField] private float timeLimitBeingSmall;
+    [SerializeField] private float shiftPowerCooldown;
+
     [SerializeField] private LeanTweenType easeType;
-
-    public bool IsCurrentlySmall => isSmall;
-
     [SerializeField] private UnityEvent onShrink,onExpand;
+
+    #region PROPERTY
     public UnityEvent OnShrink => onShrink;
     public UnityEvent OnExpand => onExpand;
+    public bool IsCurrentlySmall => isSmall;
+    public float TimeLimitBeingSmall => timeLimitBeingSmall;
+    public float ShiftPowerCooldown => shiftPowerCooldown;
+    public float TimeRequiredToShift => timeRequiredToShift;
+    public float TimeSpentInSmall { get; private set; }
+    public float NextTimeToUnlock { get; private set; }
+    #endregion
 
     void Update()
     {
@@ -36,16 +42,16 @@ public class ShapeShiftPower : MonoBehaviour
 
         if (isSmall)
         {
-            smallTime += Time.deltaTime;
-            if (smallTime >= timeLimitForBeingSmall)
+            TimeSpentInSmall += Time.deltaTime;
+            if (TimeSpentInSmall >= timeLimitBeingSmall)
             {
                 Expand();
             }
         }
         else
         {
-            nextTimeToUnlockShiftPower += Time.deltaTime;
-            if (nextTimeToUnlockShiftPower >= shiftPowerCoolDown) nextTimeToUnlockShiftPower = shiftPowerCoolDown;
+            NextTimeToUnlock += Time.deltaTime;
+            if (NextTimeToUnlock >= ShiftPowerCooldown) NextTimeToUnlock = ShiftPowerCooldown;
         }
     }
 
@@ -58,14 +64,14 @@ public class ShapeShiftPower : MonoBehaviour
                  { 
                      isSmall = false; 
                      isChangingSize = false; 
-                     smallTime = 0;
+                     TimeSpentInSmall = 0;
                      OnExpand?.Invoke();
                  });
     }
 
     private void Shrink()
     {
-        if (nextTimeToUnlockShiftPower >= shiftPowerCoolDown)
+        if (NextTimeToUnlock >= ShiftPowerCooldown)
         {
             isChangingSize = true;
             LeanTween.scale(transform.gameObject, new(smallSize, smallSize, smallSize), timeRequiredToShift)
@@ -74,7 +80,7 @@ public class ShapeShiftPower : MonoBehaviour
                      { 
                          isSmall = true; 
                          isChangingSize = false; 
-                         nextTimeToUnlockShiftPower = 0;
+                         NextTimeToUnlock = 0;
                          OnShrink?.Invoke();
                      }); 
         }

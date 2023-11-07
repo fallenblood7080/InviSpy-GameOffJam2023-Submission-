@@ -9,10 +9,7 @@ public class InputManager : MonoBehaviour
 {
     private static InputManager instance;
 
-    /// <summary>
-    /// Return the instance of InputManager
-    /// </summary>
-    public static InputManager GetInstance => instance;
+
 
     private GameInputActionMap gameaActionMap;
     private GameInputActionMap.PlayerActions playerActions;
@@ -22,10 +19,16 @@ public class InputManager : MonoBehaviour
     private bool isCrouchPressed;
     private bool isChangeSizePressed;
 
+    #region PROPERTY
+    /// <summary>
+    /// Return the instance of InputManager
+    /// </summary>
+    public static InputManager GetInstance => instance;
     public Vector2 MoveInput => moveInput;
     public bool IsJumpPressed => isJumpPressed;
     public bool IsCrouchPressed => isCrouchPressed;
-    public bool IsChangeSizePressed => isChangeSizePressed;
+    public bool IsChangeSizePressed => isChangeSizePressed; 
+    #endregion
 
     private void Awake() => Intialization();
     private void OnEnable() => EnablePlayerInput();

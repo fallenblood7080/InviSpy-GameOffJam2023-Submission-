@@ -4,9 +4,12 @@ using UnityEngine.Events;
 
 public class NoiseHandler : MonoBehaviour
 {
-    [field:SerializeField] public float noiseHearingRange {get; private set;}
+    [SerializeField] private float noiseHearingRange;
     private UnityEvent onNoiseCreate;
 
+    #region PROPERTY
+    public float NoiseHearingRange => noiseHearingRange;
+    #endregion
     public void CreateNoise()
     {
         GetAllListenerNearby();
@@ -32,4 +35,5 @@ public class NoiseHandler : MonoBehaviour
     }
 
     private static readonly string ENEMY_TAG = "Enemy";
+
 }

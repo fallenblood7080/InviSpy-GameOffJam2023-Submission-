@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
 
     private void EnemyDetection()
     {
-        if (enemyFov.visibleTargets.Count != 0 && !EnemyManager.Instance.playerPower.isSmall)
+        if (enemyFov.visibleTargets.Count != 0 && !EnemyManager.Instance.playerPower.IsCurrentlySmall)
         {
             timeElapsedWhenDetected += Time.deltaTime;
         }
