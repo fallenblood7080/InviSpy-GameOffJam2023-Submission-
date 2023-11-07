@@ -33,7 +33,7 @@ public class EnemyFov : MonoBehaviour
 
 		enemy = GetComponent<Enemy>();
 
-		StartCoroutine ("FindTargetsWithDelay", .2f);
+		StartCoroutine (nameof(FindTargetsWithDelay), .2f);
 	}
 
 
@@ -159,14 +159,16 @@ public class EnemyFov : MonoBehaviour
 	ViewCastInfo ViewCast(float globalAngle) 
 	{
 		Vector3 dir = DirFromAngle (globalAngle, true);
-		RaycastHit hit;
 
-		if (Physics.Raycast (transform.position, dir, out hit, viewRadius, obstacleMask)) {
-			return new ViewCastInfo (true, hit.point, hit.distance, globalAngle);
-		} else {
-			return new ViewCastInfo (false, transform.position + dir * viewRadius, viewRadius, globalAngle);
-		}
-	}
+        if (Physics.Raycast(transform.position, dir, out RaycastHit hit, viewRadius, obstacleMask))
+        {
+            return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
+        }
+        else
+        {
+            return new ViewCastInfo(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
+        }
+    }
 
 	public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal) {
 		if (!angleIsGlobal) {

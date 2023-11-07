@@ -29,9 +29,9 @@ public class Enemy : MonoBehaviour
 
     [field:Space(5)]
     [field:Header("Detect")]
-    [field:SerializeField] public bool hasDetected {get; set;}
-    [field:SerializeField] public bool hasSuspectedAfterDetection {get; set;}
-    [field:SerializeField] public Transform playerTransform {get; set;}
+    [field:SerializeField] public bool HasDetected {get; set;}
+    [field:SerializeField] public bool HasSuspectedAfterDetection {get; set;}
+    [field:SerializeField] public Transform PlayerTransform {get; set;}
     [SerializeField] private float maxTimeDetection;
 
     [Header("UI")]
@@ -87,33 +87,33 @@ public class Enemy : MonoBehaviour
             Agent.ResetPath();
             Agent.isStopped = true;
 
-           var targetRotation = Quaternion.LookRotation(playerTransform.transform.position - transform.position);
+           var targetRotation = Quaternion.LookRotation(PlayerTransform.transform.position - transform.position);
            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
 
            susTimerBg.gameObject.SetActive(true);
            susTimer.fillAmount = timeElapsedWhenDetected / maxTimeDetection;
 
-           hasDetected = true;
+           HasDetected = true;
         }
         else
         {
-            if (hasDetected)
+            if (HasDetected)
             {
                 sus.gameObject.SetActive(true);
 
-                hasSuspectedAfterDetection = true;
+                HasSuspectedAfterDetection = true;
 
                 Agent.ResetPath();
                 Agent.isStopped = false;
 
                 _enemyStateBase.SwitchStates(_enemyStatesFactory.Wait());
 
-                hasDetected = false;
+                HasDetected = false;
             }
             susTimerBg.gameObject.SetActive(false);
         }
 
-        if (hasDetected == true && timeElapsedWhenDetected >= maxTimeDetection)
+        if (HasDetected == true && timeElapsedWhenDetected >= maxTimeDetection)
         {
             deathText.gameObject.SetActive(true);
             timeElapsedWhenDetected = maxTimeDetection;

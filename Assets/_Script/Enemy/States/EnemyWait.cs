@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyWait : EnemyStatesBase
@@ -21,7 +20,7 @@ public class EnemyWait : EnemyStatesBase
 
         yield return new WaitForSeconds(randomWaitTime);
         Enemy.sus.gameObject.SetActive(false);
-        Enemy.hasSuspectedAfterDetection = false;
+        Enemy.HasSuspectedAfterDetection = false;
 
         SwitchStates(EStateFactory.Petrol());
     }
