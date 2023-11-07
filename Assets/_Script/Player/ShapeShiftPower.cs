@@ -7,13 +7,13 @@ public class ShapeShiftPower : MonoBehaviour
 
     [HideInInspector] public bool isSmall = false;
     private bool isChangingSize = false;
-    private float smallTime;
-    private float nextTimeToUnlockShiftPower;
+    [field:SerializeField] public float smallTime;
+    [field:SerializeField] public float nextTimeToUnlockShiftPower;
 
     [SerializeField] private float smallSize , bigSize = 1f;
-    [SerializeField] private float timeRequiredToShift;
-    [SerializeField] private float timeLimitForBeingSmall;
-    [SerializeField] private float shiftPowerCoolDown;
+    [field:SerializeField] public float timeRequiredToShift {get; private set;}
+    [field:SerializeField] public float timeLimitForBeingSmall {get; private set;}
+    [field:SerializeField] public float shiftPowerCoolDown {get; private set;}
     [SerializeField] private LeanTweenType easeType;
 
     public bool IsCurrentlySmall => isSmall;

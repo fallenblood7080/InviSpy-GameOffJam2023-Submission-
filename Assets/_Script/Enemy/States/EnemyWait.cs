@@ -18,9 +18,11 @@ public class EnemyWait : EnemyStatesBase
     IEnumerator DelayWaitForPetrol()
     {
         randomWaitTime = Random.Range(Enemy.MinWaitTime, Enemy.MaxWaitTime);
+
         yield return new WaitForSeconds(randomWaitTime);
         Enemy.sus.gameObject.SetActive(false);
-        Enemy.hasSuspected = false;
+        Enemy.hasSuspectedAfterDetection = false;
+
         SwitchStates(EStateFactory.Petrol());
     }
 

@@ -21,9 +21,14 @@ public class NoiseHandler : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, enemies.transform.position) <= noiseHearingRange)
             {
-                //onNoiseCreate.?AddListener();
+                onNoiseCreate?.AddListener(OnCreateNoise);
             }
         }
+    }
+
+    public void OnCreateNoise()
+    {
+        Debug.Log("Detect");
     }
 
     private static readonly string ENEMY_TAG = "Enemy";

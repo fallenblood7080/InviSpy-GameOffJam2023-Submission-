@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     [field:Space(5)]
     [field:Header("Detect")]
     [field:SerializeField] public bool hasDetected {get; set;}
-    [field:SerializeField] public bool hasSuspected {get; set;}
+    [field:SerializeField] public bool hasSuspectedAfterDetection {get; set;}
     [field:SerializeField] public Transform playerTransform {get; set;}
     [SerializeField] private float maxTimeDetection;
 
@@ -101,7 +101,7 @@ public class Enemy : MonoBehaviour
             {
                 sus.gameObject.SetActive(true);
 
-                hasSuspected = true;
+                hasSuspectedAfterDetection = true;
 
                 Agent.ResetPath();
                 Agent.isStopped = false;
