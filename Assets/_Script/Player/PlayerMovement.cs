@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
 
     [Space(5f)]
     [SerializeField] private Animator playerAnimator;
+    [Space(5f)]
+    [SerializeField] private ParticleSystem _jumpParticles;
+    [SerializeField] private ParticleSystem _landParticles;
 
     [SerializeField] private UnityEvent OnJumpLanded;
 
@@ -96,9 +99,9 @@ public class PlayerMovement : MonoBehaviour
             } 
         }
 
-        playerAnimator.SetBool("isGround", controller.isGrounded);
-        playerAnimator.SetBool("isCrouching", isCrouched);
-        playerAnimator.SetBool("isMoving", isMoving);
+        playerAnimator.SetBool(ISGROUND_TAG, controller.isGrounded);
+        playerAnimator.SetBool(ISCROUCH_TAG, isCrouched);
+        playerAnimator.SetBool(ISMOVE_TAG, isMoving);
 
         dir.y += gravity * Time.deltaTime; //! Add some gravity
         controller.Move(Time.deltaTime * dir); //! remember g is acceleration value thats why you multiply time.deltatime twice (m/s^2) and also for movement
@@ -114,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         dir.y = Mathf.Sqrt(gravity * -2 * jumpHeight);
-        "Jumped".Log();
+        _jumpParticles.Play();
         float timeToReachGround = 2 * Mathf.Sqrt(2 * jumpHeight / -gravity);//! Calcuate the time required to land on ground: t = 2√(2h/g)
         Invoke(nameof(JumpLanded), timeToReachGround); //! Invoke jump landed after calculate time
     }
@@ -123,7 +126,6 @@ public class PlayerMovement : MonoBehaviour
     {
         isCrouched = true;
         currentSpeed = crouchSpeed;
-        "Crouched".Log();
         controller.height = crouchHeight;
     }
 
@@ -132,7 +134,6 @@ public class PlayerMovement : MonoBehaviour
         isCrouched = false;
         currentSpeed = moveSpeed;
         controller.height = standHeight;
-        "Standed".Log();
     }
 
     void RotatePlayerTowardMovingDir(Vector3 dir)
@@ -143,11 +144,19 @@ public class PlayerMovement : MonoBehaviour
 
     void JumpLanded()
     {
-        //? wrap noise method with issmall condition
         if (!shiftPower.IsCurrentlySmall)
         {
             noise.CreateNoise(); 
         }
-        OnJumpLanded?.Invoke(); //! Invoke OnJumpLand event
+        OnJumpLanded?.Invoke(); 
+        _landParticles.Play();
     }
+
+    #region  Cached Properties
+    
+    private static readonly string ISGROUND_TAG = "isGround";
+    private static readonly string ISCROUCH_TAG = "isCrouching";
+    private static readonly string ISMOVE_TAG = "isMoving";
+
+    #endregion
 }

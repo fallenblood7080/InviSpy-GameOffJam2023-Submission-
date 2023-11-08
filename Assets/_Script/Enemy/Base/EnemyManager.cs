@@ -14,5 +14,6 @@ public class EnemyManager : MonoBehaviour
     #endregion
 
     public Transform[] WayPoints;
+    public Transform player;
     public ShapeShiftPower playerPower;
 }
