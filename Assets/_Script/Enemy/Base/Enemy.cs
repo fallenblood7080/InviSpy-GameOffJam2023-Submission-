@@ -31,7 +31,6 @@ public class Enemy : MonoBehaviour
     [field:Header("Detect")]
     [field:SerializeField] public bool HasDetected {get; set;}
     [field:SerializeField] public bool HasSuspectedAfterDetection {get; set;}
-    [field:SerializeField] public Transform PlayerTransform {get; set;}
     [SerializeField] private float maxTimeDetection;
 
     [Header("UI")]
@@ -87,7 +86,7 @@ public class Enemy : MonoBehaviour
             Agent.ResetPath();
             Agent.isStopped = true;
 
-           var targetRotation = Quaternion.LookRotation(PlayerTransform.transform.position - transform.position);
+           var targetRotation = Quaternion.LookRotation(EnemyManager.Instance.player.transform.position - transform.position);
            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
 
            susTimerBg.gameObject.SetActive(true);
