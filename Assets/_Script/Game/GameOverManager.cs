@@ -1,3 +1,4 @@
+using Extension;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,10 +40,12 @@ public class GameOverManager : MonoBehaviour
     private void MissionFailed()
     {
         //TODO: Show mission failed
+        "Mission Failed".Log("ff0000", 18);
     }
 
     private void MissionSuccessful()
     {
         //TODO: show mission Succesful, go to next mission
+        "Mission Successful".Log("0000ff", 18);
     }
 }
