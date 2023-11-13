@@ -26,8 +26,6 @@ namespace Extension
             float result = (t < 0.5) ? t * t * max * 2 : max - Mathf.Pow(max * 2 * t - 2, 2) / 2;
             return (result > max) ? max : result;
         }
-
-
     }
 
     public enum EaseType
