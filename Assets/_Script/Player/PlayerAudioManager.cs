@@ -6,7 +6,7 @@ public class PlayerAudioManager : MonoBehaviour
 {
     [Header("Footstep")]
     [SerializeField] private AudioClip[] footsteps; //! Contains the list of footstep audio
-    [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip jumplandedClip;
 
 
     private AudioSource audioSource;

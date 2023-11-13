@@ -37,6 +37,11 @@ public class PauseManager : MonoBehaviour
         OnGameUnpaused.AddListener(UnPauseGame);
         pauseActionBinding.Enable();
     }
+    void Start()
+    {
+        OnGameUnpaused?.Invoke();
+    }
+
     private void Update()
     {
         //! if pause pressed
