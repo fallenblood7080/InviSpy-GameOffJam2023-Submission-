@@ -40,12 +40,14 @@ public class Enemy : MonoBehaviour
     [field:SerializeField] public Image sus;
 
     private EnemyFov enemyFov;
+    public Animator anim {get; private set;}
 
     private float timeElapsedWhenDetected;
 
     private void Awake()
     {
         Agent = GetComponent<NavMeshAgent>();
+        anim = GetComponentInChildren<Animator>();
         enemyFov = GetComponent<EnemyFov>();
     }
     private void Start()
@@ -86,6 +88,8 @@ public class Enemy : MonoBehaviour
             Agent.ResetPath();
             Agent.isStopped = true;
 
+            anim.SetFloat(SPEED_TAG, 0f);
+
            var targetRotation = Quaternion.LookRotation(EnemyManager.Instance.player.transform.position - transform.position);
            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
 
@@ -118,5 +122,11 @@ public class Enemy : MonoBehaviour
             timeElapsedWhenDetected = maxTimeDetection;
         }
     }
+
+    #region Cached Properties
+
+    private static readonly int SPEED_TAG = Animator.StringToHash("Speed");
+
+    #endregion
 
 }

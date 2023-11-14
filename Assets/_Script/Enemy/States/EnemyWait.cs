@@ -12,6 +12,7 @@ public class EnemyWait : EnemyStatesBase
     public override void EnterState()
     {
         Enemy.LastWaitRoutine = Enemy.StartCoroutine(DelayWaitForPetrol());
+        Enemy.anim.SetFloat(SPEED_TAG, 0f);
     }
     
     IEnumerator DelayWaitForPetrol()
@@ -35,5 +36,12 @@ public class EnemyWait : EnemyStatesBase
 
     }
         
+    #endregion
+
+    #region Cached Properties
+
+    private static readonly int SPEED_TAG = Animator.StringToHash("Speed");
+
+
     #endregion
 }
