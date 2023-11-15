@@ -8,7 +8,6 @@ public class PlayerAudioManager : MonoBehaviour
     [SerializeField] private AudioClip[] footsteps; //! Contains the list of footstep audio
     [SerializeField] private AudioClip jumplandedClip;
 
-
     private AudioSource audioSource;
 
     private void Start() 
@@ -21,8 +20,10 @@ public class PlayerAudioManager : MonoBehaviour
         AudioClip clip = footsteps.ToList().GetRandomItems()[0]; //!Gets the Random Audio from footsteps array
         audioSource.PlayOneShot(clip); //!Play the Audio
     }
+
     public void OnJumpLanded()
     {
-        //TODO: Add Jump audio
+        AudioClip clip = jumplandedClip;
+        audioSource.PlayOneShot(jumplandedClip);
     }
 }

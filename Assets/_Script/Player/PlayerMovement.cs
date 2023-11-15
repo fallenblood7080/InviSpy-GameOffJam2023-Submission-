@@ -150,6 +150,7 @@ public class PlayerMovement : MonoBehaviour
         }
         OnJumpLanded?.Invoke(); 
         _landParticles.Play();
+        
     }
 
     #region  Cached Properties

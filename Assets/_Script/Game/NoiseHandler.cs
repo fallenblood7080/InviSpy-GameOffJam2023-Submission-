@@ -10,6 +10,7 @@ public class NoiseHandler : MonoBehaviour
     #region PROPERTY
     public float NoiseHearingRange => noiseHearingRange;
     #endregion
+
     public void CreateNoise()
     {
         GetAllListenerNearby();
@@ -22,16 +23,25 @@ public class NoiseHandler : MonoBehaviour
 
         foreach (GameObject enemies in GameObject.FindGameObjectsWithTag(ENEMY_TAG))
         {
-            if (Vector3.Distance(transform.position, enemies.transform.position) <= noiseHearingRange)
+            if (Vector3.Distance(transform.position, enemies.transform.position) <= noiseHearingRange && !EnemyManager.Instance.playerPower.IsCurrentlySmall)
             {
                 onNoiseCreate?.AddListener(OnCreateNoise);
+            }
+            else
+            {
+                onNoiseCreate?.AddListener(OnEndCreatingNoise);
             }
         }
     }
 
     public void OnCreateNoise()
     {
-        Debug.Log("Detect");
+        EnemyManager.Instance.isCreatingNoise = true;
+    }
+
+    public void OnEndCreatingNoise()
+    {
+        EnemyManager.Instance.isCreatingNoise = false;
     }
 
     private static readonly string ENEMY_TAG = "Enemy";

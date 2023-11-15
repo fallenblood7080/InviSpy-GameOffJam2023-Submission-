@@ -12,7 +12,6 @@ public class EnemyPatrol : EnemyStatesBase
     public override void EnterState()
     {
         Enemy.Agent.speed = Enemy.PatrolSpeed;
-        Enemy.anim.SetFloat(SPEED_TAG , 3f);
         SetRandomPoint();
         SetDestination(Enemy.CurrentWayPoint);
     }
@@ -70,10 +69,4 @@ public class EnemyPatrol : EnemyStatesBase
         
     #endregion
 
-    #region Cached Properties
-
-    private static readonly int SPEED_TAG = Animator.StringToHash("Speed");
-    
-
-    #endregion
 }

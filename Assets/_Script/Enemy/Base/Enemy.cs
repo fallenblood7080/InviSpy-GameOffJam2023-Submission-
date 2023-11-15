@@ -11,7 +11,8 @@ public class Enemy : MonoBehaviour
     [Header("Agent")]
     [HideInInspector] public NavMeshAgent Agent;
     [SerializeField] private Transform pathHolder;
-    public float PatrolSpeed = 5;
+    public float PatrolSpeed = 3;
+    public float InspectSpeed = 6;
 
     [Space(5)]
     [Header("States")]
@@ -40,9 +41,10 @@ public class Enemy : MonoBehaviour
     [field:SerializeField] public Image sus;
 
     private EnemyFov enemyFov;
-    public Animator anim {get; private set;}
+    private Animator anim;
 
     private float timeElapsedWhenDetected;
+    private bool isInspecting;
 
     private void Awake()
     {
@@ -70,6 +72,7 @@ public class Enemy : MonoBehaviour
         _enemyStateBase.UpdateState();
 
         EnemyDetection();
+        EnemyInspection();
     }
 
     private void EnemyDetection()
@@ -87,8 +90,6 @@ public class Enemy : MonoBehaviour
         {
             Agent.ResetPath();
             Agent.isStopped = true;
-
-            anim.SetFloat(SPEED_TAG, 0f);
 
            var targetRotation = Quaternion.LookRotation(EnemyManager.Instance.player.transform.position - transform.position);
            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
@@ -113,13 +114,44 @@ public class Enemy : MonoBehaviour
 
                 HasDetected = false;
             }
+            if (isInspecting)
+            {
+                Agent.ResetPath();
+
+                _enemyStateBase.SwitchStates(_enemyStatesFactory.Wait());
+                isInspecting = false;
+            }
+
             susTimerBg.gameObject.SetActive(false);
         }
 
-        if (HasDetected == true && timeElapsedWhenDetected >= maxTimeDetection)
+        if (HasDetected && timeElapsedWhenDetected >= maxTimeDetection)
         {
             deathText.gameObject.SetActive(true);
             timeElapsedWhenDetected = maxTimeDetection;
+        }
+    }
+
+    private void EnemyInspection()
+    {
+        if (!HasDetected && EnemyManager.Instance.isCreatingNoise)
+        {
+            Agent.ResetPath();
+            Agent.speed = InspectSpeed;
+
+            Agent.SetDestination(EnemyManager.Instance.player.transform.position);
+
+            sus.gameObject.SetActive(true);
+
+            isInspecting = true;
+        }
+        else if (HasDetected && EnemyManager.Instance.isCreatingNoise)
+        {
+           return; 
+        }
+        else if (HasDetected && !EnemyManager.Instance.isCreatingNoise)
+        {
+            return;
         }
     }
 

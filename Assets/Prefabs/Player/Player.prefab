@@ -9907,7 +9907,19 @@ MonoBehaviour:
   _landParticles: {fileID: 146628881787467289}
   OnJumpLanded:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1652777573431059485}
+        m_TargetAssemblyTypeName: PlayerAudioManager, Assembly-CSharp
+        m_MethodName: OnJumpLanded
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3410933350108532094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15172,7 +15184,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: af16d6d2f8b59d848a5bc521463cbb58, type: 3}
   - {fileID: 8300000, guid: 92d230e2aef4b824a9c8363b71695250, type: 3}
   - {fileID: 8300000, guid: a80cfabf44ad6d14a853aef0fcfa4338, type: 3}
-  jumpClip: {fileID: 0}
+  jumplandedClip: {fileID: 8300000, guid: 304f2bf2228cba94e91cd22803e54bcf, type: 3}
 --- !u!95 &7024042462864005306 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: ddf1570ff32523c428294ecee71c04ec,
