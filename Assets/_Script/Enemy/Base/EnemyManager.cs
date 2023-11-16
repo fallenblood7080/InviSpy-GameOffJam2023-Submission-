@@ -16,4 +16,5 @@ public class EnemyManager : MonoBehaviour
     public Transform[] WayPoints;
     public Transform player;
     public ShapeShiftPower playerPower;
+    public bool isCreatingNoise;
 }

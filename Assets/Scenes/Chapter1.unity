@@ -3911,6 +3911,7 @@ MonoBehaviour:
   - {fileID: 2123372247}
   player: {fileID: 0}
   playerPower: {fileID: 0}
+  isCreatingNoise: 0
 --- !u!1 &1375242015
 GameObject:
   m_ObjectHideFlags: 0
