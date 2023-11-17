@@ -5,7 +5,7 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private Animator animator;
+    private Animator animator;
 
 
     private PlayerMovement playerMovement;

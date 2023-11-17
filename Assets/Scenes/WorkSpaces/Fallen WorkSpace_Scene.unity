@@ -197,11 +197,6 @@ PrefabInstance:
       propertyPath: onShrink.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 984457203}
-    - target: {fileID: 6371004476107755023, guid: d6b92dfa045e9d542a18b6e49388490c,
-        type: 3}
-      propertyPath: cameraFollowRoot
-      value: 
-      objectReference: {fileID: 1333921486}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1522,16 +1517,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Virtual Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 4076997109485312299, guid: 555b9ad6ee505a542b5570d152a619e8,
-        type: 3}
-      propertyPath: m_Follow
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4076997109485312299, guid: 555b9ad6ee505a542b5570d152a619e8,
-        type: 3}
-      propertyPath: m_LookAt
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4640653679573341834, guid: 555b9ad6ee505a542b5570d152a619e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2101,12 +2086,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1809b46dfad78e64b8b7b94386c2bd98, type: 3}
---- !u!4 &1333921486 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5192067824161417491, guid: 1809b46dfad78e64b8b7b94386c2bd98,
-    type: 3}
-  m_PrefabInstance: {fileID: 1333921485}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1336992296
 GameObject:
   m_ObjectHideFlags: 0

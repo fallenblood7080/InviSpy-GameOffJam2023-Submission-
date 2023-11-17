@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private CharacterController controller;
 
-    [SerializeField] private Transform cameraFollowRoot;
+    [field: SerializeField] public Transform CameraFollowRoot { get; set; }
     [SerializeField] private Transform ceilingCheck;
     [Space(5f)]
     [SerializeField] private float moveSpeed;
@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     {
         currentSpeed = moveSpeed; //! intialse the player speed
         controller.height = standHeight;
-        if(cameraFollowRoot == null)
+        if(CameraFollowRoot == null)
         {
             Debug.LogError("cameraFollowRoot is not Assigned!");
         }
@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
 
         isSthAbove = Physics.CheckSphere(ceilingCheck.position, 0.3f, ~playerLayer); //! is there sth above player?
 
-        cameraFollowRoot.transform.position = followY ? transform.position : new(transform.position.x, 0, transform.position.z); //! check whether the camera needs to follow y axis of player then according to it follows
+        CameraFollowRoot.transform.position = followY ? transform.position : new(transform.position.x, 0, transform.position.z); //! check whether the camera needs to follow y axis of player then according to it follows
 
         dir = new(InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, InputManager.GetInstance.MoveInput.y * currentSpeed); //! reads the input
 
