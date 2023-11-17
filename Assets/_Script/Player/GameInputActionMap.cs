@@ -220,7 +220,7 @@ public partial class @GameInputActionMap: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""80d25e8a-4c4a-49a5-8458-4beba1b6fce3"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",

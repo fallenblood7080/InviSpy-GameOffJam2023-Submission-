@@ -26,7 +26,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (canAttack)
         {
-            "Press F to Attack".Log();
+            "Press Left Mouse Button to Attack".Log();
             if (InputManager.GetInstance.IsAttackPressed)
             {
                 playerMovement.Stand();
