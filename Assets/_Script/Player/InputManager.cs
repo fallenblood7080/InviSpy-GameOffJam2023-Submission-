@@ -18,6 +18,7 @@ public class InputManager : MonoBehaviour
     private bool isJumpPressed;
     private bool isCrouchPressed;
     private bool isChangeSizePressed;
+    private bool isAttackPressed;
 
     #region PROPERTY
     /// <summary>
@@ -27,7 +28,8 @@ public class InputManager : MonoBehaviour
     public Vector2 MoveInput => moveInput;
     public bool IsJumpPressed => isJumpPressed;
     public bool IsCrouchPressed => isCrouchPressed;
-    public bool IsChangeSizePressed => isChangeSizePressed; 
+    public bool IsChangeSizePressed => isChangeSizePressed;
+    public bool IsAttackPressed => isAttackPressed;
     #endregion
 
     private void Awake() => Intialization();
@@ -43,6 +45,7 @@ public class InputManager : MonoBehaviour
         isJumpPressed = playerActions.Jump.WasPerformedThisFrame();
         isCrouchPressed = playerActions.Crouch.WasPerformedThisFrame();
         isChangeSizePressed = playerActions.SizeChange.WasPerformedThisFrame();
+        isAttackPressed = playerActions.Attack.WasPerformedThisFrame();
     }
 
     private void Intialization()

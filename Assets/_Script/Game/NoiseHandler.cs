@@ -13,11 +13,11 @@ public class NoiseHandler : MonoBehaviour
 
     public void CreateNoise()
     {
-        GetAllListenerNearby();
+        //GetAllListenerNearby();
         onNoiseCreate?.Invoke();
     }
 
-    private void GetAllListenerNearby()
+/*    private void GetAllListenerNearby()
     {
         onNoiseCreate?.RemoveAllListeners();
 
@@ -32,7 +32,7 @@ public class NoiseHandler : MonoBehaviour
                 onNoiseCreate?.AddListener(OnEndCreatingNoise);
             }
         }
-    }
+    }*/
 
     public void OnCreateNoise()
     {

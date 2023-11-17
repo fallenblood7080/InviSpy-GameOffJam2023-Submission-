@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     private float currentSpeed;
     private Vector3 dir;
     private bool isCrouched;
-    private bool isMoving;
+    public bool IsMoving { get; private set; }
     private bool isSthAbove;
     
 
@@ -74,13 +74,13 @@ public class PlayerMovement : MonoBehaviour
         if (dir.x != 0 || dir.z != 0) //! is there any movement, if yes then rotate the player towards that direction
         {
             RotatePlayerTowardMovingDir(dir);
-            isMoving = true;
+            IsMoving = true;
             if(!shiftPower.IsCurrentlySmall && !isCrouched)
                 noise.CreateNoise(); //! Create some noise on movement
         }
         else
         {
-            isMoving = false;
+            IsMoving = false;
         }
 
         if (controller.isGrounded && !isSthAbove)//! if on ground and there is nothing above the player
@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
 
         playerAnimator.SetBool(ISGROUND_TAG, controller.isGrounded);
         playerAnimator.SetBool(ISCROUCH_TAG, isCrouched);
-        playerAnimator.SetBool(ISMOVE_TAG, isMoving);
+        playerAnimator.SetBool(ISMOVE_TAG, IsMoving);
 
         dir.y += gravity * Time.deltaTime; //! Add some gravity
         controller.Move(Time.deltaTime * dir); //! remember g is acceleration value thats why you multiply time.deltatime twice (m/s^2) and also for movement
@@ -129,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
         controller.height = crouchHeight;
     }
 
-    private void Stand()
+    public void Stand()
     {
         isCrouched = false;
         currentSpeed = moveSpeed;
