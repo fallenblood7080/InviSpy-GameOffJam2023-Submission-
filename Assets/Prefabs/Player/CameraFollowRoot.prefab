@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5192067824161417491}
   m_Layer: 0
   m_Name: CameraFollowRoot
-  m_TagString: Untagged
+  m_TagString: CameraRoot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
