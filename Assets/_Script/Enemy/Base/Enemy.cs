@@ -156,7 +156,6 @@ public class Enemy : MonoBehaviour
     }
 
     #region Cached Properties
-
     private static readonly int SPEED_TAG = Animator.StringToHash("Speed");
 
     #endregion

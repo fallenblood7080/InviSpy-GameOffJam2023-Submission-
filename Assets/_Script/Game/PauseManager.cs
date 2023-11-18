@@ -47,7 +47,6 @@ public class PauseManager : MonoBehaviour
         //! if pause pressed
         if (pauseActionBinding.WasPerformedThisFrame())
         {
-            "BackPressed".Log();
             HandlePause();
         }
     }
@@ -73,13 +72,11 @@ public class PauseManager : MonoBehaviour
     }
     private void PauseGame()
     {
-        "GameIsPaused".Log("00ff00", 16);
         isPaused = true;
         Time.timeScale = 0;
     }
     private void UnPauseGame()
     {
-        "GameIs-UN-Paused".Log("00ff00", 16);
         isPaused = false;
         Time.timeScale = 1;
     }

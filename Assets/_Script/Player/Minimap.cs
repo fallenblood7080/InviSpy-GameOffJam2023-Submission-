@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinimapFollowX : MonoBehaviour
+public class Minimap : MonoBehaviour
 {
     [Header("Minimap Rotations")]
     [SerializeField] private Transform playerRefernce;
