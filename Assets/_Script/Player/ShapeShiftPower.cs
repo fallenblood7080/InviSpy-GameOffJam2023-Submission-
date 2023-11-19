@@ -9,6 +9,7 @@ public class ShapeShiftPower : MonoBehaviour
     private bool isChangingSize = false;
 
     [SerializeField] private float smallSize , bigSize = 1f;
+    [SerializeField] private bool useOrginalScale;
 
     [SerializeField] private float timeRequiredToShift;
     [SerializeField] private float timeLimitBeingSmall;
@@ -27,6 +28,11 @@ public class ShapeShiftPower : MonoBehaviour
     public float TimeSpentInSmall { get; private set; }
     public float NextTimeToUnlock { get; private set; }
     #endregion
+
+    private void Start()
+    {
+        bigSize = useOrginalScale ? transform.localScale.x : bigSize;
+    }
 
     void Update()
     {

@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private bool followY;
     [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private bool shouldInverseInput;
 
     [Space(5f)]
     [SerializeField] private Animator playerAnimator;
@@ -69,8 +70,14 @@ public class PlayerMovement : MonoBehaviour
 
         CameraFollowRoot.transform.position = followY ? transform.position : new(transform.position.x, 0, transform.position.z); //! check whether the camera needs to follow y axis of player then according to it follows
 
-        dir = new(InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, InputManager.GetInstance.MoveInput.y * currentSpeed); //! reads the input
-
+        if (!shouldInverseInput)
+        {
+            dir = new(InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, InputManager.GetInstance.MoveInput.y * currentSpeed); //! reads the input
+        }
+        else
+        {
+            dir = new(-InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, -InputManager.GetInstance.MoveInput.y * currentSpeed); //! reads the input
+        }
         if (dir.x != 0 || dir.z != 0) //! is there any movement, if yes then rotate the player towards that direction
         {
             RotatePlayerTowardMovingDir(dir);

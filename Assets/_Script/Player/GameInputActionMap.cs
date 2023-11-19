@@ -209,7 +209,7 @@ public partial class @GameInputActionMap: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""64726f5e-eaca-4291-9609-032b7bcca4e6"",
-                    ""path"": ""<Keyboard>/g"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
