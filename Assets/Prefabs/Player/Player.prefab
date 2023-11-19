@@ -10030,7 +10030,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.2000003, y: 1, z: 38.3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2015109559292205972}
@@ -10080,9 +10080,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CameraFollowRoot>k__BackingField: {fileID: 0}
   ceilingCheck: {fileID: 2015109559292205972}
-  moveSpeed: 5
-  crouchSpeed: 1
-  smallSizeMoveSpeed: 2
+  moveSpeed: 12
+  crouchSpeed: 4
+  smallSizeMoveSpeed: 4
   smallSizeCrouchSpeed: 0.5
   rotationSpeed: 10
   jumpHeight: 1
@@ -10093,6 +10093,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  shouldInverseInput: 1
   playerAnimator: {fileID: 7024042462864005306}
   _jumpParticles: {fileID: 8273658424299900580}
   _landParticles: {fileID: 146628881787467289}
@@ -10136,8 +10137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40696fd09ced9e140b6037bc69d25bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smallSize: 0.2
+  smallSize: 0.8
   bigSize: 1
+  useOrginalScale: 1
   timeRequiredToShift: 0.2
   timeLimitBeingSmall: 5
   shiftPowerCooldown: 2
@@ -15559,6 +15561,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2049929814205202405, guid: ddf1570ff32523c428294ecee71c04ec,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 401d976cd040eb14d9c2ea7fe3029c7a, type: 2}
     - target: {fileID: 919132149155446097, guid: ddf1570ff32523c428294ecee71c04ec,
         type: 3}
       propertyPath: m_Name
