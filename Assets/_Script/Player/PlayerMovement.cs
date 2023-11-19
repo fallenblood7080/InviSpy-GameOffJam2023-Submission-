@@ -104,14 +104,16 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.SetBool(ISMOVE_TAG, IsMoving);
 
         dir.y += gravity * Time.deltaTime; //! Add some gravity
-        controller.Move(Time.deltaTime * dir); //! remember g is acceleration value thats why you multiply time.deltatime twice (m/s^2) and also for movement
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") == false)
+        {
+            controller.Move(Time.deltaTime * dir); 
+        } //! remember g is acceleration value thats why you multiply time.deltatime twice (m/s^2) and also for movement
     }
 
     private void LateUpdate()
     {
         //! Fixing the Animation error
-        playerAnimator.transform.position = transform.root.position;
-        playerAnimator.transform.rotation = transform.root.rotation;
+        playerAnimator.transform.SetPositionAndRotation(transform.root.position, transform.root.rotation);
     }
 
     private void Jump()
@@ -138,8 +140,11 @@ public class PlayerMovement : MonoBehaviour
 
     void RotatePlayerTowardMovingDir(Vector3 dir)
     {
-        Quaternion targetRotation = Quaternion.LookRotation(new(dir.x,0,dir.z));
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * 100 * Time.deltaTime); //! Smooth the rotation
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") == false)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(new(dir.x, 0, dir.z));
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * 100 * Time.deltaTime);  
+        }//! Smooth the rotation
     }
 
     void JumpLanded()

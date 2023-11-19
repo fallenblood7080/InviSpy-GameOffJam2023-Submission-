@@ -23,13 +23,21 @@ public class NoiseHandler : MonoBehaviour
 
         foreach (GameObject enemies in GameObject.FindGameObjectsWithTag(ENEMY_TAG))
         {
-            if (Vector3.Distance(transform.position, enemies.transform.position) <= noiseHearingRange && !EnemyManager.Instance.playerPower.IsCurrentlySmall)
+
+            if (EnemyManager.Instance != null)
             {
-                onNoiseCreate?.AddListener(OnCreateNoise);
+                if (Vector3.Distance(transform.position, enemies.transform.position) <= noiseHearingRange && !EnemyManager.Instance.playerPower.IsCurrentlySmall)
+                {
+                    onNoiseCreate?.AddListener(OnCreateNoise);
+                }
+                else
+                {
+                    onNoiseCreate?.AddListener(OnEndCreatingNoise);
+                } 
             }
             else
             {
-                onNoiseCreate?.AddListener(OnEndCreatingNoise);
+                "Enemy Manager is Missing in Scene".Log("ff0000", 15);
             }
         }
     }
