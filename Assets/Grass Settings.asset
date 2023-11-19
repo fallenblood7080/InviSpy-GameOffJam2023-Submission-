@@ -18,20 +18,20 @@ MonoBehaviour:
   grassRandomHeightMax: 2.07
   bladeRadius: 0.091
   bladeForwardAmount: 0
-  bladeCurveAmount: 3.58
+  bladeCurveAmount: 2
   bottomWidth: 0.319
   MinWidth: 0.274
   MinHeight: 0.201
   MaxWidth: 0.146
   MaxHeight: 0.343
-  windSpeed: 10
+  windSpeed: 2
   windStrength: 0.05
   allowedBladesPerVertex: 4
   allowedSegmentsPerBlade: 4
   affectStrength: 1
   topTint: {r: 1, g: 0.2867924, b: 0.2867924, a: 1}
   bottomTint: {r: 1, g: 1, b: 1, a: 1}
-  drawBounds: 1
+  drawBounds: 0
   minFadeDistance: 40
   maxDrawDistance: 125
   cullingTreeDepth: 1
