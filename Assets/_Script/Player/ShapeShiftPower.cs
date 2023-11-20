@@ -8,6 +8,10 @@ public class ShapeShiftPower : MonoBehaviour
     private bool isSmall = false;
     private bool isChangingSize = false;
 
+    [Header("Marker")]
+    [SerializeField] private Transform playerSmallMark;
+    [SerializeField] private Vector3 offset;
+    [Space(5f)]
     [SerializeField] private float smallSize , bigSize = 1f;
     [SerializeField] private bool useOrginalScale;
 
@@ -17,6 +21,7 @@ public class ShapeShiftPower : MonoBehaviour
 
     [SerializeField] private LeanTweenType easeType;
     [SerializeField] private UnityEvent onShrink,onExpand;
+    
 
     #region PROPERTY
     public UnityEvent OnShrink => onShrink;
@@ -36,6 +41,18 @@ public class ShapeShiftPower : MonoBehaviour
 
     void Update()
     {
+        if (IsCurrentlySmall)
+        {
+            playerSmallMark.gameObject.SetActive(true);
+            if (playerSmallMark != null)
+            {
+                playerSmallMark.position = new(transform.position.x + offset.x, transform.position.y + offset.y, transform.position.z + offset.z);
+            } 
+        }
+        else
+        {
+            playerSmallMark.gameObject.SetActive(false);
+        }
 
         if (InputManager.GetInstance.IsChangeSizePressed)
         {
