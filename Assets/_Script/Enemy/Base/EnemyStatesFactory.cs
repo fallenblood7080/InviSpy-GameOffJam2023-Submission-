@@ -14,4 +14,8 @@ public class EnemyStatesFactory : MonoBehaviour
         // States
         public EnemyPatrol Petrol() { return new EnemyPatrol(Enemy, this); }
         public EnemyWait Wait() { return new EnemyWait(Enemy, this); }
+        public EnemyDetect Detect() { return new EnemyDetect(Enemy, this); }
+        public EnemyChase Chase() { return new EnemyChase(Enemy, this); }
+        public EnemyAfterDetect AfterDetect() { return new EnemyAfterDetect(Enemy, this); }
+        public EnemyAfterChase AfterChase() { return new EnemyAfterChase(Enemy, this); }
     }

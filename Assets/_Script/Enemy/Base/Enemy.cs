@@ -30,9 +30,10 @@ public class Enemy : MonoBehaviour
 
     [field:Space(5)]
     [field:Header("Detect")]
-    [field:SerializeField] public bool HasDetected {get; set;}
+    [field:SerializeField] public bool hasDetected {get; set;}
     [field:SerializeField] public bool HasSuspectedAfterDetection {get; set;}
-    [SerializeField] private float maxTimeDetection;
+    [field:SerializeField] public bool isInspecting {get; set;}
+    [field:SerializeField] public float maxTimeDetection {get; private set;}
 
     [Header("UI")]
     [SerializeField] public TextMeshProUGUI deathText;
@@ -43,8 +44,8 @@ public class Enemy : MonoBehaviour
     private EnemyFov enemyFov;
     private Animator anim;
 
-    private float timeElapsedWhenDetected;
-    private bool isInspecting;
+    [HideInInspector] public float timeElapsedWhenDetected;
+
 
     private void Awake()
     {
@@ -72,7 +73,6 @@ public class Enemy : MonoBehaviour
         _enemyStateBase.UpdateState();
 
         EnemyDetection();
-        EnemyInspection();
     }
 
     private void EnemyDetection()
@@ -88,76 +88,31 @@ public class Enemy : MonoBehaviour
 
         if (timeElapsedWhenDetected > 0f)
         {
-            Agent.ResetPath();
-            Agent.isStopped = true;
-
-           var targetRotation = Quaternion.LookRotation(EnemyManager.Instance.player.transform.position - transform.position);
-           transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
-
-           susTimerBg.gameObject.SetActive(true);
-           susTimer.fillAmount = timeElapsedWhenDetected / maxTimeDetection;
-
-           HasDetected = true;
+            hasDetected = true;
         }
         else
         {
-            if (HasDetected)
-            {
-                sus.gameObject.SetActive(true);
-
-                HasSuspectedAfterDetection = true;
-
-                Agent.ResetPath();
-                Agent.isStopped = false;
-
-                _enemyStateBase.SwitchStates(_enemyStatesFactory.Wait());
-
-                HasDetected = false;
-            }
-            if (isInspecting)
-            {
-                Agent.ResetPath();
-
-                _enemyStateBase.SwitchStates(_enemyStatesFactory.Wait());
-                isInspecting = false;
-            }
-
-            susTimerBg.gameObject.SetActive(false);
+            hasDetected = false;
         }
 
-        if (HasDetected && timeElapsedWhenDetected >= maxTimeDetection)
+        if (hasDetected && timeElapsedWhenDetected >= maxTimeDetection)
         {
             deathText.gameObject.SetActive(true);
             timeElapsedWhenDetected = maxTimeDetection;
         }
     }
 
-    private void EnemyInspection()
+    public void HasDetected(bool detected)
     {
-        if (!HasDetected && EnemyManager.Instance.isCreatingNoise)
+        detected = hasDetected;
+
+        if (detected)
         {
-            Agent.ResetPath();
-            Agent.speed = InspectSpeed;
-
-            Agent.SetDestination(EnemyManager.Instance.player.transform.position);
-
-            sus.gameObject.SetActive(true);
-
-            isInspecting = true;
+            _enemyStateBase.SwitchStates(_enemyStatesFactory.Detect());
         }
-        else if (HasDetected && EnemyManager.Instance.isCreatingNoise)
-        {
-           return; 
-        }
-        else if (HasDetected && !EnemyManager.Instance.isCreatingNoise)
+        else
         {
             return;
         }
     }
-
-    #region Cached Properties
-    private static readonly int SPEED_TAG = Animator.StringToHash("Speed");
-
-    #endregion
-
 }

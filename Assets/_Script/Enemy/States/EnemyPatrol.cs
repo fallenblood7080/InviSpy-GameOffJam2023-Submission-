@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyPatrol : EnemyStatesBase
 {
+    private bool detection;
+
     public EnemyPatrol(Enemy enemy, EnemyStatesFactory enemyStateFactory) : base(enemy, enemyStateFactory)
     {
 
@@ -19,6 +21,7 @@ public class EnemyPatrol : EnemyStatesBase
     public override void UpdateState()
     {
         CheckAndSetDestination();
+        Enemy.HasDetected(detection);
     }
     
     private void CheckAndSetDestination()

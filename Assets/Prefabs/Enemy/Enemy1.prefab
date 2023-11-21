@@ -109,6 +109,9 @@ GameObject:
   - component: {fileID: 2927228282776508721}
   - component: {fileID: 1716421602641205161}
   - component: {fileID: 5954742227379008181}
+  - component: {fileID: 8990359364187452595}
+  - component: {fileID: 7112054499996430210}
+  - component: {fileID: 3673059071246590787}
   m_Layer: 8
   m_Name: Enemy1
   m_TagString: Enemy
@@ -201,13 +204,15 @@ MonoBehaviour:
   WayPoints: []
   CurrentWayPoint: {fileID: 0}
   ExtraPetrolStopDistance: 1.5
-  <HasDetected>k__BackingField: 0
+  <hasDetected>k__BackingField: 0
   <HasSuspectedAfterDetection>k__BackingField: 0
-  maxTimeDetection: 1
+  <isInspecting>k__BackingField: 0
+  <maxTimeDetection>k__BackingField: 1.5
   deathText: {fileID: 0}
   susTimerBg: {fileID: 2642370502293040405}
   susTimer: {fileID: 7150713247185975847}
   sus: {fileID: 6815177061199101301}
+  timeElapsedWhenDetected: 0
 --- !u!114 &5954742227379008181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,6 +239,110 @@ MonoBehaviour:
   edgeDstThreshold: 0.5
   maskCutawayDst: 0.1
   viewMeshFilter: {fileID: 6945752816560905702}
+--- !u!95 &8990359364187452595
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762849598747775312}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7112054499996430210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762849598747775312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RigLayers:
+  - m_Rig: {fileID: 0}
+    m_Active: 1
+  m_Effectors: []
+--- !u!114 &3673059071246590787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762849598747775312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boneShape: 1
+  drawBones: 1
+  drawTripods: 0
+  boneSize: 1
+  tripodSize: 1
+  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
+  m_Transforms:
+  - {fileID: 4426802007368860652}
+  - {fileID: 4116353206795528133}
+  - {fileID: 4930027040770185909}
+  - {fileID: 444877766571373938}
+  - {fileID: 7643358340669681391}
+  - {fileID: 2588200163953157394}
+  - {fileID: 8589409952854441923}
+  - {fileID: 8680092680015704935}
+  - {fileID: 6885901834080697688}
+  - {fileID: 722225121134354957}
+  - {fileID: 1790784194041128706}
+  - {fileID: 3477678603261550590}
+  - {fileID: 4460909412101730432}
+  - {fileID: 5061146814135658305}
+  - {fileID: 5553493018509750052}
+  - {fileID: 3681449184161902670}
+  - {fileID: 5314289223896166866}
+  - {fileID: 7895276706371002068}
+  - {fileID: 5918623490074429651}
+  - {fileID: 5430128955677015308}
+  - {fileID: 8243634016401352249}
+  - {fileID: 2346143240768047838}
+  - {fileID: 3039399030949423295}
+  - {fileID: 8476295912144976354}
+  - {fileID: 4882809480725444841}
+  - {fileID: 6149559302324829737}
+  - {fileID: 7560473756422671952}
+  - {fileID: 1616683383226522730}
+  - {fileID: 245714968454129021}
+  - {fileID: 6907465123397334347}
+  - {fileID: 5814775258324846906}
+  - {fileID: 1259397625610408137}
+  - {fileID: 6638825686771492700}
+  - {fileID: 1006708763148968109}
+  - {fileID: 5803933891658146987}
+  - {fileID: 312850091732324501}
+  - {fileID: 5925059390059457487}
+  - {fileID: 4040620038985852442}
+  - {fileID: 2872957670635996241}
+  - {fileID: 3685502981646442454}
+  - {fileID: 3682698451371816567}
+  - {fileID: 3704138146360762449}
+  - {fileID: 102531341426997218}
+  - {fileID: 2780804932574671565}
+  - {fileID: 5254367622183380250}
+  - {fileID: 1857527453081845879}
+  - {fileID: 347446968571420856}
+  - {fileID: 2184168194955469751}
 --- !u!1 &845769930006562307
 GameObject:
   m_ObjectHideFlags: 0
@@ -2554,7 +2663,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3463379568844973116
 RectTransform:
   m_ObjectHideFlags: 0
