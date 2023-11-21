@@ -21,6 +21,7 @@ public class EnemyAfterDetect : EnemyStatesBase
         SwitchStates(EStateFactory.Wait());
         
         Enemy.susTimerBg.gameObject.SetActive(false);
+
     }
 
     public override void ExitState()

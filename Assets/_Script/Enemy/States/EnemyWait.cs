@@ -19,6 +19,7 @@ public class EnemyWait : EnemyStatesBase
         randomWaitTime = Random.Range(Enemy.MinWaitTime, Enemy.MaxWaitTime);
 
         yield return new WaitForSeconds(randomWaitTime);
+    
         Enemy.sus.gameObject.SetActive(false);
         Enemy.HasSuspectedAfterDetection = false;
 
@@ -30,9 +31,15 @@ public class EnemyWait : EnemyStatesBase
     {
 
     }
+
     public override void UpdateState()
     {
-
+        if (Enemy.timeElapsedWhenDetected > 0f && Enemy.HasSuspectedAfterDetection)
+        {
+            Enemy.StopAllCoroutines();
+            Enemy.sus.gameObject.SetActive(false);
+            SwitchStates(EStateFactory.Detect());
+        }
     }
         
     #endregion

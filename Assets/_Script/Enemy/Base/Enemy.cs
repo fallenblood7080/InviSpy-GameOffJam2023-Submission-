@@ -110,9 +110,5 @@ public class Enemy : MonoBehaviour
         {
             _enemyStateBase.SwitchStates(_enemyStatesFactory.Detect());
         }
-        else
-        {
-            return;
-        }
     }
 }
