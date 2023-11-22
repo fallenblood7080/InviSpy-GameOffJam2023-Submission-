@@ -172,7 +172,7 @@ GameObject:
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 40
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &3117679427370845219
 Transform:
@@ -264,12 +264,13 @@ MonoBehaviour:
   <hasDetected>k__BackingField: 0
   <HasSuspectedAfterDetection>k__BackingField: 0
   <maxTimeDetection>k__BackingField: 1.5
-  <InspectSpeed>k__BackingField: 0
-  <isInspecting>k__BackingField: 0
+  <ChaseSpeed>k__BackingField: 6
+  <isChasing>k__BackingField: 0
   deathText: {fileID: 0}
   susTimerBg: {fileID: 2642370502293040405}
   susTimer: {fileID: 7150713247185975847}
   sus: {fileID: 6815177061199101301}
+  anim: {fileID: 6689189993001636832}
   timeElapsedWhenDetected: 0
 --- !u!114 &5954742227379008181
 MonoBehaviour:

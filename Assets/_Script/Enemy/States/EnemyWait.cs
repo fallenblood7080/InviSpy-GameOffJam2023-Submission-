@@ -41,6 +41,18 @@ public class EnemyWait : EnemyStatesBase
             Enemy.sus.gameObject.SetActive(false);
             SwitchStates(EStateFactory.Detect());
         }
+        if (EnemyManager.Instance.isCreatingNoise)
+        {
+            if (Enemy.hasDetected)
+            {
+                return;
+            }
+            else
+            {
+                Enemy.StopAllCoroutines();
+                SwitchStates(EStateFactory.Chase());               
+            }
+        }
     }
         
     #endregion
