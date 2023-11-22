@@ -13,6 +13,7 @@ public class EnemyDetect : EnemyStatesBase
     {
         Enemy.Agent.ResetPath();
         Enemy.Agent.isStopped = true;
+        Enemy.ChangeeAnimationState(AnimationState.Idle);
     }
 
     public override void ExitState()

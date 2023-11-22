@@ -11,8 +11,8 @@ public class Enemy : MonoBehaviour
     [Header("Agent")]
     [HideInInspector] public NavMeshAgent Agent;
     [SerializeField] private Transform pathHolder;
-    public float PatrolSpeed = 3;
-    public float InspectSpeed = 6;
+    [SerializeField] private AnimationState animationState = AnimationState.Idle;
+
 
     [Space(5)]
     [Header("States")]
@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     [Space(5)]
     [Header("Patroling")]
     public Coroutine LastWaitRoutine;
+    public float PatrolSpeed = 3;
     public float MinWaitTime = 1f, MaxWaitTime = 6f;
     [HideInInspector] public Transform[] WayPoints;
     [HideInInspector] public Transform CurrentWayPoint;
@@ -30,10 +31,14 @@ public class Enemy : MonoBehaviour
 
     [field:Space(5)]
     [field:Header("Detect")]
-    [field:SerializeField] public bool hasDetected {get; set;}
+    [field:SerializeField] public bool hasDetected {get; private set;}
     [field:SerializeField] public bool HasSuspectedAfterDetection {get; set;}
-    [field:SerializeField] public bool isInspecting {get; set;}
     [field:SerializeField] public float maxTimeDetection {get; private set;}
+
+    [field:Space(5)]
+    [field:Header("Inspecting")]
+    [field:SerializeField] public float InspectSpeed {get; private set;}
+    [field:SerializeField] public bool isInspecting {get; private set;}
 
     [Header("UI")]
     [SerializeField] public TextMeshProUGUI deathText;
@@ -42,7 +47,7 @@ public class Enemy : MonoBehaviour
     [field:SerializeField] public Image sus;
 
     private EnemyFov enemyFov;
-    private Animator anim;
+    public Animator anim;
 
     [HideInInspector] public float timeElapsedWhenDetected;
 
@@ -50,7 +55,6 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         Agent = GetComponent<NavMeshAgent>();
-        anim = GetComponentInChildren<Animator>();
         enemyFov = GetComponent<EnemyFov>();
     }
     private void Start()
@@ -73,6 +77,8 @@ public class Enemy : MonoBehaviour
         _enemyStateBase.UpdateState();
 
         EnemyDetection();
+        EnemyInpsection();
+        EnemyAnimation();
     }
 
     private void EnemyDetection()
@@ -111,4 +117,47 @@ public class Enemy : MonoBehaviour
             _enemyStateBase.SwitchStates(_enemyStatesFactory.Detect());
         }
     }
+
+    private void EnemyInpsection()
+    {
+        // TODO
+    }
+
+    private void EnemyAnimation()
+    {
+        switch (animationState)
+        {
+            case AnimationState.Idle:
+                anim.SetFloat(SPEED_TAG, 0f);
+                Debug.Log("Idle");
+                return;
+            
+            case AnimationState.Walk:
+                anim.SetFloat(SPEED_TAG, 3f);
+                Debug.Log("Walk");
+                return;
+            
+            case AnimationState.Run:
+                anim.SetFloat(SPEED_TAG, 6f);
+                return;
+        }
+    }
+
+    public void ChangeeAnimationState(AnimationState state)
+    {
+        animationState = state;
+    }
+
+    #region Cached Properties
+
+    private static readonly int SPEED_TAG = Animator.StringToHash("Speed");
+
+    #endregion
+}
+
+public enum AnimationState
+{
+    Idle,
+    Walk,
+    Run
 }

@@ -12,6 +12,7 @@ public class EnemyWait : EnemyStatesBase
     public override void EnterState()
     {
         Enemy.LastWaitRoutine = Enemy.StartCoroutine(DelayWaitForPetrol());
+        Enemy.ChangeeAnimationState(AnimationState.Idle);
     }
     
     IEnumerator DelayWaitForPetrol()

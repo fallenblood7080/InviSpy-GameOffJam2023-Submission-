@@ -16,6 +16,7 @@ public class EnemyPatrol : EnemyStatesBase
         Enemy.Agent.speed = Enemy.PatrolSpeed;
         SetRandomPoint();
         SetDestination(Enemy.CurrentWayPoint);
+        Enemy.ChangeeAnimationState(AnimationState.Walk);
     }
 
     public override void UpdateState()
