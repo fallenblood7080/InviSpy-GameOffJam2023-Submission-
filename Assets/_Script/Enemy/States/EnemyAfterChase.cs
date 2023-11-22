@@ -11,7 +11,10 @@ public class EnemyAfterChase : EnemyStatesBase
 
     public override void EnterState()
     {
+        Enemy.isChasing = false;
+        Enemy.sus.gameObject.SetActive(false);
 
+        SwitchStates(EStateFactory.Wait());
     }
 
     public override void ExitState()

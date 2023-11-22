@@ -13,7 +13,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform pathHolder;
     [SerializeField] private AnimationState animationState = AnimationState.Idle;
 
-
     [Space(5)]
     [Header("States")]
     private EnemyStatesFactory _enemyStatesFactory;
@@ -37,8 +36,8 @@ public class Enemy : MonoBehaviour
 
     [field:Space(5)]
     [field:Header("Inspecting")]
-    [field:SerializeField] public float InspectSpeed {get; private set;}
-    [field:SerializeField] public bool isInspecting {get; private set;}
+    [field:SerializeField] public float ChaseSpeed {get; private set;}
+    [field:SerializeField] public bool isChasing {get; set;}
 
     [Header("UI")]
     [SerializeField] public TextMeshProUGUI deathText;
@@ -77,7 +76,7 @@ public class Enemy : MonoBehaviour
         _enemyStateBase.UpdateState();
 
         EnemyDetection();
-        EnemyInpsection();
+        EnemyChasing();
         EnemyAnimation();
     }
 
@@ -108,19 +107,35 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void HasDetected(bool detected)
+    public void HasDetected()
     {
-        detected = hasDetected;
-
-        if (detected)
+        if (hasDetected)
         {
             _enemyStateBase.SwitchStates(_enemyStatesFactory.Detect());
         }
     }
 
-    private void EnemyInpsection()
+    private void EnemyChasing()
     {
-        // TODO
+        if (EnemyManager.Instance.isCreatingNoise)
+        {
+            if (hasDetected)
+            {
+                return;
+            }
+            else
+            {
+                isChasing = true;
+            }
+        }
+    }
+
+    public void HasChased()
+    {
+        if (isChasing)
+        {
+            _enemyStateBase.SwitchStates(_enemyStatesFactory.Chase());
+        }
     }
 
     private void EnemyAnimation()
@@ -129,12 +144,10 @@ public class Enemy : MonoBehaviour
         {
             case AnimationState.Idle:
                 anim.SetFloat(SPEED_TAG, 0f);
-                Debug.Log("Idle");
                 return;
             
             case AnimationState.Walk:
                 anim.SetFloat(SPEED_TAG, 3f);
-                Debug.Log("Walk");
                 return;
             
             case AnimationState.Run:
