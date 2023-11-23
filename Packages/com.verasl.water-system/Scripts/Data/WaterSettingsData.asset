@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: WaterSettingsData
   m_EditorClassIdentifier: 
   waterGeomType: 1
-  refType: 0
+  refType: 2
   planarSettings:
-    m_ResolutionMultiplier: 1
-    m_ClipPlaneOffset: 0.24
+    m_ResolutionMultiplier: 3
+    m_ClipPlaneOffset: -0.071
     m_ReflectLayers:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 1
     m_Shadows: 0
   cubemapRefType: {fileID: 8900000, guid: a64d2362d418d194f91274685fb10faf, type: 3}
   isInfinite: 0
