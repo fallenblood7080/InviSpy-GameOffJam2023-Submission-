@@ -41,18 +41,7 @@ public class ShapeShiftPower : MonoBehaviour
 
     void Update()
     {
-        if (IsCurrentlySmall)
-        {
-            playerSmallMark.gameObject.SetActive(true);
-            if (playerSmallMark != null)
-            {
-                playerSmallMark.position = new(transform.position.x + offset.x, transform.position.y + offset.y, transform.position.z + offset.z);
-            } 
-        }
-        else
-        {
-            playerSmallMark.gameObject.SetActive(false);
-        }
+        playerSmallMark.position = new(transform.position.x + offset.x, transform.position.y + offset.y, transform.position.z + offset.z);
 
         if (InputManager.GetInstance.IsChangeSizePressed)
         {
@@ -69,6 +58,7 @@ public class ShapeShiftPower : MonoBehaviour
             if (TimeSpentInSmall >= timeLimitBeingSmall)
             {
                 Expand();
+                TimeSpentInSmall = 0;
             }
         }
         else
@@ -80,6 +70,7 @@ public class ShapeShiftPower : MonoBehaviour
 
     private void Expand()
     {
+        transform.position = new(transform.position.x, transform.position.y + 2, transform.position.z);
         isChangingSize = true;
         LeanTween.scale(transform.gameObject, new(bigSize, bigSize, bigSize), timeRequiredToShift)
                  .setEase(easeType)

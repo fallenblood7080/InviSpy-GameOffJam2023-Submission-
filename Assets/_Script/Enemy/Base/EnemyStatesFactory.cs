@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStatesFactory : MonoBehaviour
+public class EnemyStatesFactory
     {
         public Enemy Enemy;
 

@@ -23,8 +23,8 @@ public class EnemyDetect : EnemyStatesBase
 
     public override void UpdateState()
     {
-        var targetRotation = Quaternion.LookRotation(EnemyManager.Instance.player.transform.position - Enemy.transform.position);
-        Enemy.transform.rotation = Quaternion.Slerp(Enemy.transform.rotation, targetRotation, 2f * Time.deltaTime);
+        //var targetRotation = Quaternion.LookRotation(EnemyManager.Instance.player.transform.position - Enemy.transform.position);
+        //Enemy.transform.rotation = Quaternion.Slerp(Enemy.transform.rotation, targetRotation, 2f * Time.deltaTime);
 
         Enemy.susTimerBg.gameObject.SetActive(true);
         Enemy.susTimer.fillAmount = Enemy.timeElapsedWhenDetected / Enemy.maxTimeDetection;

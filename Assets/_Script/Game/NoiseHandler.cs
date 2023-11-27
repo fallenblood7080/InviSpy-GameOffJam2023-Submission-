@@ -29,6 +29,7 @@ public class NoiseHandler : MonoBehaviour
                 if (Vector3.Distance(transform.position, enemies.transform.position) <= noiseHearingRange)
                 {
                     onNoiseCreate?.AddListener(OnCreateNoise);
+
                 }
                 else
                 {

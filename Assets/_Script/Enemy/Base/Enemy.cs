@@ -1,3 +1,4 @@
+using Extension;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -119,6 +120,7 @@ public class Enemy : MonoBehaviour
     {
         if (EnemyManager.Instance.isCreatingNoise)
         {
+            "Noisey".Log();
             if (hasDetected)
             {
                 return;
