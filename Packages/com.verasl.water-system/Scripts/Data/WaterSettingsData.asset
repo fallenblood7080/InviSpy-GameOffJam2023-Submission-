@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: WaterSettingsData
   m_EditorClassIdentifier: 
   waterGeomType: 1
-  refType: 0
+  refType: 2
   planarSettings:
     m_ResolutionMultiplier: 3
-    m_ClipPlaneOffset: -0.071
+    m_ClipPlaneOffset: -0.055
     m_ReflectLayers:
       serializedVersion: 2
       m_Bits: 1
