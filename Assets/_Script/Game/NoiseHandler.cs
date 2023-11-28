@@ -5,52 +5,34 @@ using UnityEngine.Events;
 public class NoiseHandler : MonoBehaviour
 {
     [SerializeField] private float noiseHearingRange;
-    private UnityEvent onNoiseCreate;
+    private UnityEvent<Vector3, int> onNoiseCreate;
 
     #region PROPERTY
     public float NoiseHearingRange => noiseHearingRange;
     #endregion
 
-    public void CreateNoise()
+    public void CreateNoise(int noisePwr)
     {
         GetAllListenerNearby();
-        onNoiseCreate?.Invoke();
+        onNoiseCreate?.Invoke(transform.position,noisePwr);
     }
 
     private void GetAllListenerNearby()
     {
         onNoiseCreate?.RemoveAllListeners();
 
-        foreach (GameObject enemies in GameObject.FindGameObjectsWithTag(ENEMY_TAG))
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag(ENEMY_TAG))
         {
-
-            if (EnemyManager.Instance != null)
+            if (Vector3.Distance(transform.position, enemy.transform.position) <= noiseHearingRange)
             {
-                if (Vector3.Distance(transform.position, enemies.transform.position) <= noiseHearingRange)
-                {
-                    onNoiseCreate?.AddListener(OnCreateNoise);
+                onNoiseCreate?.AddListener(enemy.GetComponent<Enemy>().OnHearNoise);
 
-                }
-                else
-                {
-                    onNoiseCreate?.AddListener(OnEndCreatingNoise);
-                } 
             }
             else
             {
-                "Enemy Manager is Missing in Scene".Log("ff0000", 15);
+                onNoiseCreate?.AddListener(enemy.GetComponent<Enemy>().OnEndHearingNoise);
             }
         }
-    }
-
-    public void OnCreateNoise()
-    {
-        EnemyManager.Instance.isCreatingNoise = true;
-    }
-
-    public void OnEndCreatingNoise()
-    {
-        EnemyManager.Instance.isCreatingNoise = false;
     }
 
     private static readonly string ENEMY_TAG = "Enemy";

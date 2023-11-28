@@ -1,4 +1,5 @@
 using Extension;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,7 +10,114 @@ using UnityEngine.UI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
-    [Header("Agent")]
+    private NavMeshAgent agent;
+    private Vector3 currentTarget;
+    private int confuseMeter;
+    bool isSupected;
+    private float susMeter;
+    private EnemyFov fov;
+    private Transform player;
+
+    [SerializeField] private Animator enemyAnimator;
+    [SerializeField] private float walkSpeed;
+    [SerializeField] private float runSpeed;
+    [SerializeField] private float waitDuration;
+    [SerializeField] private List<Transform> patrolPoints;
+    [SerializeField] private GameObject susMark;
+    [SerializeField] private GameObject susMeterObject;
+    [SerializeField] private Image susMeterFill;
+    [field: SerializeField] public EnemyState State { get; private set; }
+
+
+    private static readonly int SPEED_TAG = Animator.StringToHash("Speed");
+
+    private void Start() => InitializeEnemy();
+
+    private void InitializeEnemy()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = walkSpeed;
+        currentTarget = GetRandomPoint();
+        agent.SetDestination(currentTarget);
+        fov = GetComponent<EnemyFov>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    private void Update()
+    {
+        susMark.SetActive(isSupected);
+
+        enemyAnimator.SetFloat(SPEED_TAG, agent.speed);
+        if (isSupected == false)
+        {
+            if (agent.remainingDistance <= 0.1f)
+            {
+                currentTarget = GetRandomPoint();
+                agent.SetDestination(currentTarget);
+                agent.speed = 0;
+                Invoke(nameof(Waiting), waitDuration);
+            } 
+        }
+
+        if (fov.visibleTargets.Contains(player) && !player.GetComponent<ShapeShiftPower>().IsCurrentlySmall)
+        {
+            susMark.SetActive(false);
+            susMeterObject.SetActive(true);
+            susMeter += Time.deltaTime / 2;
+        }
+        else
+        {
+            agent.stoppingDistance = 0;
+            susMeter -= Time.deltaTime;
+        }
+        susMeterFill.fillAmount = susMeter;
+        if(susMeter <= 0)
+        {
+            susMeterObject.SetActive(false);
+            susMeter = 0;
+        }
+        if(susMeter >= 1)
+        {
+            agent.speed = 0;
+            GameOverManager.GetInstance.OnGameOver?.Invoke(false);
+        }
+    }
+
+    private void Waiting()
+    {
+        agent.speed = walkSpeed;
+
+    }
+
+    private Vector3 GetRandomPoint()
+    {
+        return patrolPoints.GetRandomItems(1)[0].position;
+    }
+    public void OnHearNoise(Vector3 source , int noise)
+    {
+        isSupected = true;
+        CancelInvoke();
+        confuseMeter += noise;
+        Invoke(nameof(Waiting), waitDuration);
+        agent.SetDestination(source);
+        if(confuseMeter > 50)
+        {
+            CancelInvoke();
+            agent.speed = confuseMeter > 80 ? runSpeed : walkSpeed;
+        }
+        else
+        {
+            agent.speed = 0;
+        }
+    }
+    public void OnEndHearingNoise(Vector3 source, int noise)
+    {
+        confuseMeter = 0;
+        isSupected = false;
+    }
+
+    #region Old Enemy
+/*    [Header("Agent")]
     [HideInInspector] public NavMeshAgent Agent;
     [SerializeField] private Transform pathHolder;
     [SerializeField] private AnimationState animationState = AnimationState.Idle;
@@ -29,22 +137,22 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public Transform CurrentWayPoint;
     public float ExtraPetrolStopDistance = 1.5f;
 
-    [field:Space(5)]
-    [field:Header("Detect")]
-    [field:SerializeField] public bool hasDetected {get; private set;}
-    [field:SerializeField] public bool HasSuspectedAfterDetection {get; set;}
-    [field:SerializeField] public float maxTimeDetection {get; private set;}
+    [field: Space(5)]
+    [field: Header("Detect")]
+    [field: SerializeField] public bool hasDetected { get; private set; }
+    [field: SerializeField] public bool HasSuspectedAfterDetection { get; set; }
+    [field: SerializeField] public float maxTimeDetection { get; private set; }
 
-    [field:Space(5)]
-    [field:Header("Inspecting")]
-    [field:SerializeField] public float ChaseSpeed {get; private set;}
-    [field:SerializeField] public bool isChasing {get; set;}
+    [field: Space(5)]
+    [field: Header("Inspecting")]
+    [field: SerializeField] public float ChaseSpeed { get; private set; }
+    [field: SerializeField] public bool isChasing { get; set; }
 
     [Header("UI")]
     [SerializeField] public TextMeshProUGUI deathText;
     [SerializeField] public Image susTimerBg;
     [SerializeField] public Image susTimer;
-    [field:SerializeField] public Image sus;
+    [field: SerializeField] public Image sus;
 
     private EnemyFov enemyFov;
     public Animator anim;
@@ -147,11 +255,11 @@ public class Enemy : MonoBehaviour
             case AnimationState.Idle:
                 anim.SetFloat(SPEED_TAG, 0f);
                 return;
-            
+
             case AnimationState.Walk:
                 anim.SetFloat(SPEED_TAG, 3f);
                 return;
-            
+
             case AnimationState.Run:
                 anim.SetFloat(SPEED_TAG, 6f);
                 return;
@@ -163,14 +271,14 @@ public class Enemy : MonoBehaviour
         animationState = state;
     }
 
-    #region Cached Properties
 
-    private static readonly int SPEED_TAG = Animator.StringToHash("Speed");
 
-    #endregion
+*/
+
+    #endregion 
 }
 
-public enum AnimationState
+public enum EnemyState
 {
     Idle,
     Walk,

@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
             RotatePlayerTowardMovingDir(dir);
             IsMoving = true;
             if(!shiftPower.IsCurrentlySmall && !isCrouched)
-                noise.CreateNoise(); //! Create some noise on movement
+                noise.CreateNoise(1); //! Create some noise on movement
         }
         else
         {
@@ -157,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!shiftPower.IsCurrentlySmall)
         {
-            noise.CreateNoise(); 
+            noise.CreateNoise(50); 
         }
         OnJumpLanded?.Invoke(); 
         _landParticles.Play();
