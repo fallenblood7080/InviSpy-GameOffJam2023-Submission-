@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject susMark;
     [SerializeField] private GameObject susMeterObject;
     [SerializeField] private Image susMeterFill;
+    [SerializeField] private AudioSource playerIsSus;
     [field: SerializeField] public EnemyState State { get; private set; }
 
 
@@ -63,11 +64,13 @@ public class Enemy : MonoBehaviour
         {
             susMark.SetActive(false);
             susMeterObject.SetActive(true);
+            playerIsSus.Play();
             susMeter += Time.deltaTime / 2;
         }
         else
         {
             agent.stoppingDistance = 0;
+            playerIsSus.Stop();
             susMeter -= Time.deltaTime;
         }
         susMeterFill.fillAmount = susMeter;
@@ -80,6 +83,7 @@ public class Enemy : MonoBehaviour
         {
             agent.speed = 0;
             GameOverManager.GetInstance.OnGameOver?.Invoke(false);
+            playerIsSus.Stop();
         }
     }
 
