@@ -10,6 +10,7 @@ public class UsePC : MonoBehaviour
     [SerializeField] private GameObject doorUnlockedText;
     [SerializeField] private GameObject door;
     [SerializeField] private string message;
+    [SerializeField] private AudioSource doorUnlocked;
 
     private void Update()
     {
@@ -29,15 +30,12 @@ public class UsePC : MonoBehaviour
                 GameObject gameObject = collider.gameObject;
                 if (gameObject.tag == targetTag)
                 {
-                    // Found a matching GameObject
-                    Debug.Log("Found GameObject: " + gameObject.name);
-
                     intractText.SetActive(true);
 
                     if (InputManager.GetInstance.IsInteractPressed)
                     {
-                        Debug.Log("workedhehehe");
                         door.SetActive(false);
+                        doorUnlocked.Play();
                         StartCoroutine(DoorUnlocked());
                     }
                 }

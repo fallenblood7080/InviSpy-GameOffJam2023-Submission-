@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ public class Enemy : MonoBehaviour
     private float susMeter;
     private EnemyFov fov;
     private Transform player;
+    private bool isSaying = false;
 
     [SerializeField] private Animator enemyAnimator;
     [SerializeField] private float walkSpeed;
@@ -26,7 +28,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject susMark;
     [SerializeField] private GameObject susMeterObject;
     [SerializeField] private Image susMeterFill;
-    [SerializeField] private AudioSource playerIsSus;
+    [SerializeField] private GameObject gameMusic;
+    [SerializeField] private AudioSource[] enemyDialogues;
+
     [field: SerializeField] public EnemyState State { get; private set; }
 
 
@@ -42,6 +46,7 @@ public class Enemy : MonoBehaviour
         agent.SetDestination(currentTarget);
         fov = GetComponent<EnemyFov>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        
     }
 
     private void Update()
@@ -64,13 +69,22 @@ public class Enemy : MonoBehaviour
         {
             susMark.SetActive(false);
             susMeterObject.SetActive(true);
-            playerIsSus.Play();
+            if (!gameMusic.GetComponent<PlayerIsSus_EnemyMusic>().isplayerIsSusPlaying)
+            {
+                gameMusic.GetComponent<PlayerIsSus_EnemyMusic>().PlayMusic();
+            }
+            else{}
+            if (!isSaying)
+            {
+                enemyDialogues[UnityEngine.Random.Range(0,2)].Play();
+                isSaying = true;
+                StartCoroutine(stopSaying());
+            }
             susMeter += Time.deltaTime / 2;
         }
         else
         {
             agent.stoppingDistance = 0;
-            playerIsSus.Stop();
             susMeter -= Time.deltaTime;
         }
         susMeterFill.fillAmount = susMeter;
@@ -83,8 +97,13 @@ public class Enemy : MonoBehaviour
         {
             agent.speed = 0;
             GameOverManager.GetInstance.OnGameOver?.Invoke(false);
-            playerIsSus.Stop();
         }
+    }
+
+    private IEnumerator stopSaying()
+    {
+        yield return new WaitForSeconds(2f);
+        isSaying = false;
     }
 
     private void Waiting()

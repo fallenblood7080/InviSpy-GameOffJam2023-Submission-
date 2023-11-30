@@ -11,6 +11,7 @@ public class GameOverManager : MonoBehaviour
     public UnityEvent<bool> OnGameOver => onGameOver;
 
     [SerializeField] private GameObject failedObject, successObject;
+    [SerializeField] private GameObject player;
 
     private void Awake()
     {
@@ -48,6 +49,7 @@ public class GameOverManager : MonoBehaviour
     {
         //TODO: show mission Succesful, go to next mission
         "Mission Successful".Log("0000ff", 18);
-        successObject.SetActive(false);
+        player.SetActive(false);
+        successObject.SetActive(true);
     }
 }

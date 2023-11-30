@@ -1,15 +1,11 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using Unity.VisualScripting;
 
 public class CompleteTheGame : MonoBehaviour
 {
     private string targetTag = "Player"; // Tag of the GameObjects to search for
     [SerializeField] private float range = 1.5f; // Radius of the sphere
-    [SerializeField] private GameObject intractText; 
-    [SerializeField] private GameObject successMenu; 
+    [SerializeField] private GameObject intractText;
+    [SerializeField] private AudioSource gamecomplete; 
     private bool isSuccess = true;
 
 
@@ -38,6 +34,7 @@ public class CompleteTheGame : MonoBehaviour
                     if (InputManager.GetInstance.IsInteractPressed)
                     {
                         GameOverManager.GetInstance.OnGameOver?.Invoke(isSuccess);
+                        gamecomplete.Play();
                         intractText.SetActive(false);
                         enabled = false;
                     }
