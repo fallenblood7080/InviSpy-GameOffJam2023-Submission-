@@ -15,6 +15,7 @@ public class InputManager : MonoBehaviour
     private GameInputActionMap.PlayerActions playerActions;
 
     private Vector2 moveInput;
+    private Vector2 lookInput;
     private bool isJumpPressed;
     private bool isCrouchPressed;
     private bool isChangeSizePressed;
@@ -30,6 +31,7 @@ public class InputManager : MonoBehaviour
     public bool IsCrouchPressed => isCrouchPressed;
     public bool IsChangeSizePressed => isChangeSizePressed;
     public bool IsAttackPressed => isAttackPressed;
+    public Vector2 LookInput => lookInput;
     #endregion
 
     private void Awake() => Intialization();
@@ -46,6 +48,7 @@ public class InputManager : MonoBehaviour
         isCrouchPressed = playerActions.Crouch.WasPerformedThisFrame();
         isChangeSizePressed = playerActions.SizeChange.WasPerformedThisFrame();
         isAttackPressed = playerActions.Attack.WasPerformedThisFrame();
+        lookInput = playerActions.Look.ReadValue<Vector2>().normalized;
     }
 
     private void Intialization()

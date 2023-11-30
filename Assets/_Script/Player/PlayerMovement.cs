@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isCrouched;
     public bool IsMoving { get; private set; }
     private bool isSthAbove;
+    private float xRotation;
 
     private void Awake()
     {
@@ -51,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         currentSpeed = moveSpeed; //! intialse the player speed
         controller.height = standHeight;
         if(CameraFollowRoot == null)
@@ -71,12 +73,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (!shouldInverseInput)
         {
-            dir = new(InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, InputManager.GetInstance.MoveInput.y * currentSpeed); //! reads the input
+            dir = new Vector3(InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, InputManager.GetInstance.MoveInput.y * currentSpeed); //! reads the input
         }
         else
         {
-            dir = new(-InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, -InputManager.GetInstance.MoveInput.y * currentSpeed); //! reads the input
-        }
+            dir = new Vector3(-InputManager.GetInstance.MoveInput.x * currentSpeed, dir.y, -InputManager.GetInstance.MoveInput.y * currentSpeed); //! reads the input
+        } 
         if (dir.x != 0 || dir.z != 0) //! is there any movement, if yes then rotate the player towards that direction
         {
             RotatePlayerTowardMovingDir(dir);
@@ -149,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
         if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") == false)
         {
             Quaternion targetRotation = Quaternion.LookRotation(new(dir.x, 0, dir.z));
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * 100 * Time.deltaTime);  
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * 100 * Time.deltaTime);
         }//! Smooth the rotation
     }
 
