@@ -35,16 +35,11 @@ public class CompleteTheGame : MonoBehaviour
                     // Debug.Log("Found GameObject: " + gameObject.name);
 
                     intractText.SetActive(true);
-                    if (InputManager.GetInstance.IsAttackPressed)
+                    if (InputManager.GetInstance.IsInteractPressed)
                     {
                         GameOverManager.GetInstance.OnGameOver?.Invoke(isSuccess);
                         intractText.SetActive(false);
-                        successMenu.SetActive(true);
-                        CompleteTheGame script = gameObject.GetComponent<CompleteTheGame>();
-                        if(script != null)
-                        {
-                            script.enabled = false;
-                        }
+                        enabled = false;
                     }
                 }
 

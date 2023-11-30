@@ -26,6 +26,7 @@ public class GameOverManager : MonoBehaviour
 
     void GameOver(bool isPassed)
     {
+        Cursor.lockState = CursorLockMode.None;
         if (isPassed)
         {
             MissionSuccessful();

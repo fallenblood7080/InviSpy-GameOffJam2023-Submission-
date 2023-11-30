@@ -32,7 +32,7 @@ public class PlayerAttack : MonoBehaviour
         if (canAttack)
         {
             "Press Left Mouse Button to Attack".Log();
-            if (InputManager.GetInstance.IsAttackPressed)
+            if (InputManager.GetInstance.IsInteractPressed)
             {
                 playerMovement.Stand();
                 animator!.SetTrigger("Stab");

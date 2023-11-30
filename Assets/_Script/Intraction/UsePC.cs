@@ -1,8 +1,6 @@
 using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
+using UnityEngine;
 
 public class UsePC : MonoBehaviour
 {
@@ -11,7 +9,7 @@ public class UsePC : MonoBehaviour
     [SerializeField] private GameObject intractText;
     [SerializeField] private GameObject doorUnlockedText;
     [SerializeField] private GameObject door;
-
+    [SerializeField] private string message;
 
     private void Update()
     {
@@ -36,7 +34,7 @@ public class UsePC : MonoBehaviour
 
                     intractText.SetActive(true);
 
-                    if (InputManager.GetInstance.IsAttackPressed)
+                    if (InputManager.GetInstance.IsInteractPressed)
                     {
                         Debug.Log("workedhehehe");
                         door.SetActive(false);
@@ -56,6 +54,8 @@ public class UsePC : MonoBehaviour
     {
         intractText.SetActive(false);
         doorUnlockedText.SetActive(true);
+        doorUnlockedText.GetComponent<TMP_Text>().text = message;
+        Objective.instance.Updatetarget();
 
         yield return new WaitForSeconds(3f);
 

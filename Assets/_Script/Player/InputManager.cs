@@ -19,7 +19,7 @@ public class InputManager : MonoBehaviour
     private bool isJumpPressed;
     private bool isCrouchPressed;
     private bool isChangeSizePressed;
-    private bool isAttackPressed;
+    private bool isInteractPressed;
 
     #region PROPERTY
     /// <summary>
@@ -30,7 +30,7 @@ public class InputManager : MonoBehaviour
     public bool IsJumpPressed => isJumpPressed;
     public bool IsCrouchPressed => isCrouchPressed;
     public bool IsChangeSizePressed => isChangeSizePressed;
-    public bool IsAttackPressed => isAttackPressed;
+    public bool IsInteractPressed => isInteractPressed;
     public Vector2 LookInput => lookInput;
     #endregion
 
@@ -45,9 +45,9 @@ public class InputManager : MonoBehaviour
 
         moveInput = playerActions.Move.ReadValue<Vector2>().normalized; 
         isJumpPressed = playerActions.Jump.WasPerformedThisFrame();
-        isCrouchPressed = playerActions.Crouch.WasPerformedThisFrame();
+        //isCrouchPressed = playerActions.Crouch.WasPerformedThisFrame();
         isChangeSizePressed = playerActions.SizeChange.WasPerformedThisFrame();
-        isAttackPressed = playerActions.Attack.WasPerformedThisFrame();
+        isInteractPressed = playerActions.Interact.WasPerformedThisFrame();
         lookInput = playerActions.Look.ReadValue<Vector2>().normalized;
     }
 
