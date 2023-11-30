@@ -1,7 +1,4 @@
 using Extension;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,6 +9,8 @@ public class GameOverManager : MonoBehaviour
 
     [SerializeField] private UnityEvent<bool> onGameOver;
     public UnityEvent<bool> OnGameOver => onGameOver;
+
+    [SerializeField] private GameObject failedObject, successObject;
 
     private void Awake()
     {
@@ -41,11 +40,13 @@ public class GameOverManager : MonoBehaviour
     {
         //TODO: Show mission failed
         "Mission Failed".Log("ff0000", 18);
+        failedObject.SetActive(true);
     }
 
     private void MissionSuccessful()
     {
         //TODO: show mission Succesful, go to next mission
         "Mission Successful".Log("0000ff", 18);
+        successObject.SetActive(false);
     }
 }
