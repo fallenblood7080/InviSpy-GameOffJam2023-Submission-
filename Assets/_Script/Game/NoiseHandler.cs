@@ -11,6 +11,11 @@ public class NoiseHandler : MonoBehaviour
     public float NoiseHearingRange => noiseHearingRange;
     #endregion
 
+    private void Awake()
+    {
+        onNoiseCreate = new();
+    }
+
     public void CreateNoise(int noisePwr)
     {
         GetAllListenerNearby();
@@ -25,16 +30,21 @@ public class NoiseHandler : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, enemy.transform.position) <= noiseHearingRange)
             {
-                onNoiseCreate?.AddListener(enemy.GetComponent<Enemy>().OnHearNoise);
+                onNoiseCreate.AddListener(enemy.GetComponent<Enemy>().OnHearNoise);
 
             }
             else
             {
-                onNoiseCreate?.AddListener(enemy.GetComponent<Enemy>().OnEndHearingNoise);
+                onNoiseCreate.AddListener(enemy.GetComponent<Enemy>().OnEndHearingNoise);
             }
         }
     }
 
     private static readonly string ENEMY_TAG = "Enemy";
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, noiseHearingRange);
+    }
 
 }

@@ -31,8 +31,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject gameMusic;
     [SerializeField] private AudioSource[] enemyDialogues;
 
-    [field: SerializeField] public EnemyState State { get; private set; }
-
 
     private static readonly int SPEED_TAG = Animator.StringToHash("Speed");
 
@@ -69,6 +67,7 @@ public class Enemy : MonoBehaviour
         {
             susMark.SetActive(false);
             susMeterObject.SetActive(true);
+            
             if (!gameMusic.GetComponent<PlayerIsSus_EnemyMusic>().isplayerIsSusPlaying)
             {
                 gameMusic.GetComponent<PlayerIsSus_EnemyMusic>().PlayMusic();
@@ -92,6 +91,10 @@ public class Enemy : MonoBehaviour
         {
             susMeterObject.SetActive(false);
             susMeter = 0;
+        }
+        if(susMeter <= 0.5 && susMeter > 0)
+        {
+            agent.speed = 0;
         }
         if(susMeter >= 1)
         {
@@ -118,6 +121,7 @@ public class Enemy : MonoBehaviour
     }
     public void OnHearNoise(Vector3 source , int noise)
     {
+        "Noise".Log();
         isSupected = true;
         CancelInvoke();
         confuseMeter += noise;
@@ -299,11 +303,4 @@ public class Enemy : MonoBehaviour
 */
 
     #endregion 
-}
-
-public enum EnemyState
-{
-    Idle,
-    Walk,
-    Run
 }
