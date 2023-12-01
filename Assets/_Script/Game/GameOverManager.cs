@@ -11,7 +11,9 @@ public class GameOverManager : MonoBehaviour
     public UnityEvent<bool> OnGameOver => onGameOver;
 
     [SerializeField] private GameObject failedObject, successObject;
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject player; 
+    [SerializeField] private GameObject musicManger; 
+    [SerializeField] private AudioSource audioSource;
 
     private void Awake()
     {
@@ -42,6 +44,9 @@ public class GameOverManager : MonoBehaviour
     {
         //TODO: Show mission failed
         "Mission Failed".Log("ff0000", 18);
+        player.SetActive(false);
+        musicManger.SetActive(false);
+        audioSource.Play();
         failedObject.SetActive(true);
     }
 
@@ -50,6 +55,7 @@ public class GameOverManager : MonoBehaviour
         //TODO: show mission Succesful, go to next mission
         "Mission Successful".Log("0000ff", 18);
         player.SetActive(false);
+        musicManger.SetActive(false);
         successObject.SetActive(true);
     }
 }
