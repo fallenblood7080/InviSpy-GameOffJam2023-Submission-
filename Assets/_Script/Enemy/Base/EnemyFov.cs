@@ -47,7 +47,8 @@ public class EnemyFov : MonoBehaviour
 
 	void LateUpdate() 
 	{
-		DrawFieldOfView ();
+		if(Time.frameCount % 10 == 0)
+			DrawFieldOfView();
 	}
 
 	void FindVisibleTargets() 
